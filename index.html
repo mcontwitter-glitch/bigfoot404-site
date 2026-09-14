@@ -17,7 +17,6 @@
   --cyan-dim:#00bcd4;
   --cyan-glow:rgba(0,229,255,.55);
   --green:#00ffc8;
-  --gold:#d4af37;
   --text:#b8f0ff;
   --text-dim:#5a8a9a;
   --danger:#ff4466;
@@ -48,11 +47,26 @@ body{
   border-bottom:1px solid var(--panel-border);padding-bottom:12px}
 .brand{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.2em;color:var(--cyan);
   text-shadow:0 0 10px var(--cyan-glow)}
-.brand .x404{color:var(--gold);text-shadow:0 0 10px rgba(212,175,55,.5)}
+.brand .x404{color:#eafcff;text-shadow:0 0 10px var(--cyan-glow)}
 .brand-sub{font-size:10px;color:var(--text-dim);letter-spacing:.22em;margin-top:4px}
 .livepill{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.18em;color:var(--green)}
 .led{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:blink 1.6s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ===== tab bar (pages) ===== */
+.tabbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+  border-bottom:1px solid rgba(0,229,255,.25);padding-bottom:12px}
+.tab{display:inline-flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer;
+  font-size:10.5px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;
+  border:1px solid rgba(0,229,255,.25);background:rgba(4,18,28,.5);
+  padding:9px 16px;white-space:nowrap;
+  clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%,0 8px);
+  transition:color .2s ease,box-shadow .2s ease,border-color .2s ease}
+.tab .led2{width:5px;height:5px;background:currentColor;border-radius:50%}
+.tab:hover{color:var(--cyan);box-shadow:0 0 14px rgba(0,229,255,.15)}
+.tab.active{color:var(--green);border-color:rgba(0,255,200,.45);
+  box-shadow:0 0 16px rgba(0,255,200,.12),inset 0 0 12px rgba(0,255,200,.05)}
+.tab .ext{font-size:8px;color:var(--text-dim)}
 
 /* ===== panels ===== */
 .hud-panel{position:relative;background:var(--bg-panel);border:1px solid var(--panel-border);
@@ -69,10 +83,10 @@ body{
 .hud-panel-ticks{font-size:9px;color:var(--text-dim);letter-spacing:2px}
 
 /* ===== hero ===== */
-.hero{margin-top:6px;text-align:center;padding:34px 10px 10px}
+.hero{margin-top:6px;text-align:center;padding:30px 10px 6px}
 .hero h1{font-family:var(--font-display);font-weight:900;font-size:clamp(2.2rem,7vw,4.4rem);letter-spacing:.14em;color:#fff;
   text-shadow:0 0 24px var(--cyan-glow),0 0 60px rgba(0,229,255,.25)}
-.hero h1 .x404{color:var(--gold);text-shadow:0 0 24px rgba(212,175,55,.6)}
+.hero h1 .x404{color:var(--cyan);text-shadow:0 0 24px var(--cyan-glow)}
 .hero .sub{margin-top:12px;font-size:13px;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase}
 .hero .tag{margin-top:14px;color:var(--text-dim);font-size:12px;letter-spacing:.08em;max-width:560px;margin-left:auto;margin-right:auto}
 
@@ -80,7 +94,7 @@ body{
 .statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
 .stat{background:var(--bg-panel);border:1px solid rgba(0,229,255,.35);padding:12px 10px;text-align:center;
   clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%,0 8px)}
-.stat .num{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--gold);text-shadow:0 0 12px rgba(212,175,55,.4)}
+.stat .num{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--cyan);text-shadow:0 0 12px var(--cyan-glow)}
 .stat .lbl{font-size:9px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
 
 /* ===== layout grid ===== */
@@ -117,6 +131,15 @@ body{
 .mono-fn{font-size:11px;color:var(--text-dim);line-height:1.9}
 .mono-fn .fn{color:var(--green)}
 
+/* assets section */
+#assets-sec{display:none;margin-top:6px}
+#assets-sec.show{display:flex;flex-direction:column;gap:14px}
+.asset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.asset-num{font-family:var(--font-display);font-size:1.15rem;color:var(--green);text-shadow:0 0 12px rgba(0,255,200,.35)}
+.asset-row{display:flex;justify-content:space-between;font-size:10.5px;line-height:2;color:var(--text-dim)}
+.asset-row .k{color:var(--text)}
+.asset-row .v{color:var(--cyan)}
+
 /* wallet rows */
 .wrow{display:flex;justify-content:space-between;font-size:10px;line-height:2;color:var(--text-dim)}
 .wrow .addr{color:var(--text)}
@@ -131,6 +154,7 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
   .grid3{grid-template-columns:1fr}
   .col.right{order:-1}
   .loglist{max-height:110px}
+  .tabbar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin}
 }
 @media (prefers-reduced-motion:reduce){
   #bgvid{display:none}
@@ -153,6 +177,19 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
     </div>
     <div class="livepill"><span class="led"></span> SYSTEMS NOMINAL · PIPELINE LIVE</div>
   </div>
+
+  <!-- TAB BAR — PAGES -->
+  <nav class="tabbar" id="tabbar">
+    <a class="tab active" id="tab-main" href="#" onclick="showMain(event)">MAIN</a>
+    <a class="tab" href="https://untitled-app-ce296983.base44.app" target="_blank" rel="noopener">CRM <span class="ext">▸ crm</span></a>
+    <a class="tab" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net" target="_blank" rel="noopener">BIGSCAN <span class="ext">▸ scan</span></a>
+    <a class="tab" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net" target="_blank" rel="noopener">BIG WALLET <span class="ext">▸ wallet</span></a>
+    <a class="tab" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net/node-setup" target="_blank" rel="noopener">RUN-A-NODE <span class="ext">▸ nodes</span></a>
+    <a class="tab" id="tab-assets" href="#" onclick="showAssets(event)">ASSETS</a>
+  </nav>
+
+  <!-- MAIN VIEW -->
+  <div id="main-view">
 
   <!-- HERO -->
   <div class="hero">
@@ -259,73 +296,125 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
       </div>
 
       <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">REAL-TIME DATA STREAM</span><span class="hud-panel-ticks">▢▢▢</span></div>
+        <div class="hud-panel-header"><span class="hud-panel-title">DATA STREAM</span><span class="hud-panel-ticks">▢▢▢</span></div>
         <div class="kv">
-          <div><b>TPS</b><span class="val" id="tps">2</span></div>
-          <div><b>LATENCY</b><span class="val" id="lat">162.0ms</span></div>
-          <div><b>COMPUTE</b><span class="val" id="cmp">16%</span></div>
-          <div><b>MSG/S</b><span class="val" id="mps">82</span></div>
+          <div><b>TPS</b><span class="val" id="dtps">—</span></div>
+          <div><b>LATENCY</b><span class="val" id="dlat">—</span></div>
+          <div><b>COMPUTE</b><span class="val" id="dcpu">—</span></div>
+          <div><b>MSG/S</b><span class="val" id="dmsg">—</span></div>
         </div>
       </div>
 
       <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">WALLET TRACKER // TOP HOLDERS</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div id="wallets">
-          <div class="wrow"><span class="addr">MINT Foot…bCqc</span><span><span class="val">520.00M</span> <span class="pct">52.0%</span></span></div>
-          <div class="wrow"><span class="addr">4MMp…LkvJ</span><span><span class="val">258.67M</span> <span class="pct">25.9%</span></span></div>
-          <div class="wrow"><span class="addr">UDFk…Rb1A</span><span><span class="val">109.00M</span> <span class="pct">10.9%</span></span></div>
-          <div class="wrow"><span class="addr">GpMZ…xFbL</span><span><span class="val">50.00M</span> <span class="pct">5.0%</span></span></div>
-          <div class="wrow"><span class="addr">7iTE…itJR</span><span><span class="val">6.17M</span> <span class="pct">0.6%</span></span></div>
+        <div class="hud-panel-header"><span class="hud-panel-title">WALLET TRACKER</span><span class="hud-panel-ticks">▢▢▢</span></div>
+        <div class="wrow"><span class="addr">VAULT · cold</span><span class="pct">82.4%</span></div>
+        <div class="wrow"><span class="addr">OPS · warm</span><span class="pct">11.1%</span></div>
+        <div class="wrow"><span class="addr">FAUCET</span><span class="pct">4.2%</span></div>
+        <div class="wrow"><span class="addr">NODE REWARDS</span><span class="pct">2.3%</span></div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /main-view -->
+
+  <!-- ASSETS VIEW (tab) -->
+  <div id="assets-sec">
+    <div class="hud-panel">
+      <div class="hud-panel-header"><span class="hud-panel-title">COMPANY ASSETS // REAL ESTATE</span><span class="hud-panel-ticks">▢▢▢</span></div>
+      <div class="asset-grid">
+        <div class="hud-panel">
+          <div class="asset-num">2,500+</div>
+          <div class="stat-lbl" style="font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-top:4px">PROPERTIES SOURCED</div>
+          <div class="asset-row" style="margin-top:10px"><span class="k">Pipeline valuation</span><span class="v">$932M+</span></div>
+          <div class="asset-row"><span class="k">Active leads</span><span class="v">1,800+</span></div>
+          <div class="asset-row"><span class="k">Deals in motion</span><span class="v">23</span></div>
+        </div>
+        <div class="hud-panel">
+          <div class="asset-num">50+</div>
+          <div class="stat-lbl" style="font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-top:4px">INSTITUTIONAL BUYERS</div>
+          <div class="asset-row" style="margin-top:10px"><span class="k">Markets covered</span><span class="v">Nationwide</span></div>
+          <div class="asset-row"><span class="k">Anchor buyers</span><span class="v">Fortune 500</span></div>
+          <div class="asset-row"><span class="k">Buyer cushion</span><span class="v">32%</span></div>
+        </div>
+        <div class="hud-panel">
+          <div class="asset-num">CRM</div>
+          <div class="stat-lbl" style="font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-top:4px">WHOLESALE ENGINE</div>
+          <div class="asset-row" style="margin-top:10px"><span class="k">Lead scraper</span><span class="v">Daily · 50 states</span></div>
+          <div class="asset-row"><span class="k">Contract system</span><span class="v">PSA + AOC</span></div>
+          <div class="asset-row"><span class="k">Outreach</span><span class="v">Auto · email + phone</span></div>
         </div>
       </div>
+    </div>
+
+    <div class="hud-panel">
+      <div class="hud-panel-header"><span class="hud-panel-title">COMPANY ASSETS // BIG NETWORK</span><span class="hud-panel-ticks">▢▢▢</span></div>
+      <div class="asset-grid">
+        <div class="hud-panel">
+          <div class="asset-num">BIG CHAIN</div>
+          <div class="asset-row" style="margin-top:10px"><span class="k">Seed node</span><span class="v">RUNPOD · LIVE</span></div>
+          <div class="asset-row"><span class="k">Explorer</span><span class="v">BIGSCAN</span></div>
+          <div class="asset-row"><span class="k">Faucet + wallet</span><span class="v">ONLINE</span></div>
+        </div>
+        <div class="hud-panel">
+          <div class="asset-num">bigfoot404.sol</div>
+          <div class="asset-row" style="margin-top:10px"><span class="k">SNS domain</span><span class="v">VAULTED ✓</span></div>
+          <div class="asset-row"><span class="k">Registry</span><span class="v">Solana Name Service</span></div>
+          <div class="asset-row"><span class="k">Control</span><span class="v">COMPANY WALLET</span></div>
+        </div>
+        <div class="hud-panel">
+          <div class="asset-num">BRAND</div>
+          <div class="asset-row" style="margin-top:10px"><span class="k">Domain</span><span class="v">bigfoot404.biz</span></div>
+          <div class="asset-row"><span class="k">Identity</span><span class="v">NAVY · GOLD · STEEL</span></div>
+          <div class="asset-row"><span class="k">Pitch deck</span><span class="v">12-PAGE PDF</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contactbar hud-panel">
+      <b>BIGFOOT404 LLC</b> · 800 3RD AVE, NEW YORK, NY 10022 · 1-800-404-4187 · <b>INFO@BIGFOOT404.BIZ</b>
     </div>
   </div>
 
   <!-- CONTACT -->
   <div class="contactbar">
-    SELLING OFF-MARKET OR BUYING ASSIGNMENTS? <b>1-800-404-4187</b> · <b>INFO@BIGFOOT404.BIZ</b> · 800 3RD AVE, NEW YORK, NY 10022
+    <b>BIGFOOT404 LLC</b> · 800 3RD AVE, NEW YORK, NY 10022 · 1-800-404-4187 · <b>INFO@BIGFOOT404.BIZ</b>
   </div>
 
-  <footer>© 2026 BIGFOOT404 LLC · WWW.BIGFOOT404.BIZ · NEW YORK, NY</footer>
+<footer>© 2026 BIGFOOT404 LLC · NEW YORK, NY</footer>
 </div>
 
 <script>
-// ===== streaming deal log =====
-const LOGS=[
-  ['0x42448874_3B9C1943','LEAD#0969 claimed "Owner outreach — offer queued"'],
-  ['0x7DFA6B20_DEF523FF','DEAL#0269 completed "Contract sent to seller"'],
-  ['0x963687E2_DC69E5D9','BUYER#1300 claimed "Assignment routing — Blackstone tier"'],
-  ['0x9E4AE173_204B3836','LEAD#1277 completed "60% cash offer accepted"'],
-  ['0xC6FBACD8_7F2CCA57','DEAL#1312 completed "PSA signed — closing scheduled"'],
-  ['0x68A100A1_C295218C','NET#1280 claimed "Node sync — chain height current"'],
-  ['0x3E719E9E_2AD4F565','BUYER#1352 claimed "Due diligence — title contingency clear"'],
-  ['0x1CBE4804_8B2E3393','DEAL#0483 completed "AOC delivered — fee secured 8%"'],
-  ['0x6D3A14B_6AC5062E','LEAD#0896 claimed "New FSBO batch scraped — 38 imports"'],
-  ['0x93FF2E01_EAD1AF6C','SCAN#1480 fault — retrying listing source'],
-  ['0x2D16F3D9_7BF2CB64','DEAL#0262 completed "Wire received — deal closed"'],
-  ['0x0DA9C590_DDD55BAF','LEAD#0794 claimed "Follow-up email sequence armed"'],
-];
-const logEl=document.getElementById('deallog');
-let li=0;
-function pushLog(){
-  const [id,text]=LOGS[li%LOGS.length];li++;
-  const row=document.createElement('li');
-  row.innerHTML=`<span class="id">${id}</span><br><span class="act">${text}</span>`;
-  row.style.opacity='0';row.style.transition='opacity .6s';
-  logEl.prepend(row);
-  requestAnimationFrame(()=>{row.style.opacity='1'});
-  while(logEl.children.length>7)logEl.removeChild(logEl.lastChild);
-}
-pushLog();pushLog();pushLog();pushLog();
-setInterval(pushLog,2600);
+function showAssets(e){e.preventDefault();
+  document.getElementById('main-view').style.display='none';
+  document.getElementById('assets-sec').classList.add('show');
+  document.getElementById('tab-main').classList.remove('active');
+  document.getElementById('tab-assets').classList.add('active');
+  window.scrollTo({top:0});}
+function showMain(e){e.preventDefault();
+  document.getElementById('assets-sec').classList.remove('show');
+  document.getElementById('main-view').style.display='block';
+  document.getElementById('tab-assets').classList.remove('active');
+  document.getElementById('tab-main').classList.add('active');
+  window.scrollTo({top:0});}
 
-// ===== data stream jitter =====
-function jit(el,fmt,base,spread){setInterval(()=>{const v=base+(Math.random()-0.5)*spread;el.textContent=fmt(v)},1800)}
-const t=document.getElementById('tps'),l=document.getElementById('lat'),c=document.getElementById('cmp'),m=document.getElementById('mps');
-jit(t,v=>Math.max(1,Math.round(v)),2,1.4);
-jit(l,v=>v.toFixed(1)+'ms',162,14);
-jit(c,v=>Math.round(v)+'%',16,5);
-jit(m,v=>Math.round(v),82,16);
+/* deal log stream */
+const leads=["LEAD#1277","LEAD#1278","LEAD#1281","LEAD#1285","LEAD#1290","LEAD#1293","LEAD#1297"];
+const acts=["60% cash offer accepted","owner outreach sent","PSA generated","buyer matched","assignment routed","contract signed","inspection window opened","title contingency cleared"];
+const ids=["0x9E44AE173","0x9636B7E2D","0xDC69E509F","0x4A1C88B0E","0x7F3D21C9A","0xB8E44D012"];
+const log=document.getElementById('deallog');
+function hex(){return ids[Math.floor(Math.random()*ids.length)];}
+function addLog(){
+  const li=document.createElement('li');
+  const t=new Date().toLocaleTimeString('en-US',{hour12:false});
+  li.innerHTML=`<span class="ok">[${t}]</span> <span class="id">${hex()}</span> <span class="act">${leads[Math.floor(Math.random()*leads.length)]} ${acts[Math.floor(Math.random()*acts.length)]}</span>`;
+  log.insertBefore(li,log.firstChild);
+  if(log.children.length>9)log.removeChild(log.lastChild);
+}
+for(let i=0;i<6;i++)addLog();
+setInterval(addLog,3200);
+
+/* data stream jitter */
+function setD(id,v,j){document.getElementById(id).textContent=v+(Math.random()*j).toFixed(1);}
+setInterval(()=>{setD('dtps',2,4);setD('dlat',150,30);setD('dcpu',10,8);setD('dmsg',80,25);},2000);
 </script>
 </body>
 </html>
