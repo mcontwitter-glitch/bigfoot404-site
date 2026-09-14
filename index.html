@@ -34,8 +34,7 @@ body{
 }
 
 /* ===== background video + overlays ===== */
-#bgvid{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.42;filter:saturate(1.1)}
-#swarm{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#bgvid{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.62;filter:saturate(1.1)}
 .bgveil{position:fixed;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(ellipse 90% 70% at 50% 40%,transparent 30%,rgba(2,6,12,.55) 80%),linear-gradient(180deg,rgba(1,3,8,.5),rgba(3,16,24,.35))}
 .scanlines{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
@@ -162,14 +161,13 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
   #main-view{min-height:calc(100svh - 120px)}
 }
 @media (prefers-reduced-motion:reduce){
-  #bgvid,#swarm{display:none}
+  #bgvid{display:none}
   .hud-panel{animation:none}
 }
 </style>
 </head>
 <body>
 <video id="bgvid" autoplay muted loop playsinline preload="auto" src="bg_network.mp4"></video>
-<canvas id="swarm"></canvas>
 <div class="bgveil"></div>
 <div class="scanlines"></div>
 
@@ -455,124 +453,6 @@ setInterval(addLog,3200);
 /* data stream jitter */
 function setD(id,v,j){document.getElementById(id).textContent=v+(Math.random()*j).toFixed(1);}
 setInterval(()=>{setD('dtps',2,4);setD('dlat',150,30);setD('dcpu',10,8);setD('dmsg',80,25);},2000);
-
-/* ===== LIVE SWARM — orbital network tunnel (guaranteed motion, matches BIG Network HUD ref) ===== */
-(function(){
-  const c = document.getElementById('swarm');
-  if(!c || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const x = c.getContext('2d');
-  const dpr = Math.min(devicePixelRatio || 1, 2);
-  let iw = innerWidth, ih = innerHeight, cx = 0, cy = 0;
-  function resize(){
-    iw = innerWidth; ih = innerHeight;
-    c.width = iw * dpr; c.height = ih * dpr;
-    c.style.width = iw + 'px'; c.style.height = ih + 'px';
-    cx = iw / 2; cy = ih * 0.40;
-  }
-  resize(); addEventListener('resize', resize);
-
-  /* Orbital rings: elliptical flight-paths tilted around a shared core, like a
-     satellite-tunnel network view. Each ring carries a few traveling node dots. */
-  const RINGS = [];
-  const ringCount = Math.max(16, Math.min(30, Math.round(Math.min(iw, ih) / 26)));
-  for(let i = 0; i < ringCount; i++){
-    RINGS.push({
-      rx: 0.16 + Math.random() * 0.86,
-      ryRatio: 0.10 + Math.random() * 0.30,
-      tilt: (Math.random() - 0.5) * 0.6,
-      vOff: (Math.random() - 0.5) * 0.30,
-      spin: (Math.random() - 0.5) * 0.00028,
-      phase: Math.random() * 6.283,
-      op: 0.05 + Math.random() * 0.11
-    });
-  }
-  const DOTS = [];
-  const dotCount = Math.max(28, Math.min(70, Math.round(iw * ih / 14000)));
-  for(let i = 0; i < dotCount; i++){
-    DOTS.push({
-      ring: RINGS[Math.floor(Math.random() * RINGS.length)],
-      t: Math.random() * 6.283,
-      speed: (Math.random() < 0.5 ? -1 : 1) * (0.0016 + Math.random() * 0.0028),
-      r: Math.random() * 1.3 + 0.9,
-      hub: Math.random() < 0.16
-    });
-  }
-  const baseSpan = Math.max(iw, ih) * 0.62;
-
-  function ringPoint(ring, t, spanScale){
-    const rx = ring.rx * baseSpan * spanScale;
-    const ry = rx * ring.ryRatio;
-    const ex = Math.cos(t) * rx;
-    const ey = Math.sin(t) * ry;
-    const ct = Math.cos(ring.tilt), st = Math.sin(ring.tilt);
-    return { x: cx + ex * ct - ey * st, y: cy + ring.vOff * baseSpan * 0.5 + (ex * st + ey * ct) };
-  }
-
-  let tt = 0;
-  function frame(){
-    tt++;
-    x.setTransform(dpr, 0, 0, dpr, 0, 0);
-    x.clearRect(0, 0, iw, ih);
-    const breathe = 1 + Math.sin(tt * 0.0022) * 0.035;
-
-    /* orbital ring paths */
-    for(const ring of RINGS){
-      const ph = ring.phase + tt * ring.spin;
-      x.strokeStyle = 'rgba(0,229,255,' + ring.op.toFixed(3) + ')';
-      x.lineWidth = 1;
-      x.beginPath();
-      for(let i = 0; i <= 72; i++){
-        const t = ph + (i / 72) * 6.28319;
-        const p = ringPoint(ring, t, breathe);
-        if(i === 0) x.moveTo(p.x, p.y); else x.lineTo(p.x, p.y);
-      }
-      x.stroke();
-    }
-
-    /* traveling node dots along the rings */
-    for(const d of DOTS){
-      d.t += d.speed;
-      const p = ringPoint(d.ring, d.t, breathe);
-      const glow = d.hub ? (0.55 + 0.45 * Math.sin(tt * 0.02 + d.t)) : 0.32;
-      x.fillStyle = 'rgba(0,229,255,' + (0.05 + 0.09 * glow).toFixed(3) + ')';
-      x.beginPath(); x.arc(p.x, p.y, d.r * 3.6, 0, 6.28319); x.fill();
-      x.fillStyle = d.hub ? 'rgba(150,255,225,.95)' : 'rgba(0,229,255,.82)';
-      x.beginPath(); x.arc(p.x, p.y, d.r * (d.hub ? 1.3 : 1), 0, 6.28319); x.fill();
-    }
-
-    /* core hub — pulsing reticle rings + rotating node glyph */
-    const coreR = Math.min(iw, ih) * 0.052 * breathe;
-    for(let i = 0; i < 3; i++){
-      const rr = coreR * (1 + i * 0.62) + Math.sin(tt * 0.015 + i) * 3;
-      x.strokeStyle = 'rgba(0,229,255,' + (0.22 - i * 0.06).toFixed(3) + ')';
-      x.lineWidth = 1;
-      x.beginPath(); x.arc(cx, cy, rr, 0, 6.28319); x.stroke();
-    }
-    x.save();
-    x.translate(cx, cy);
-    x.rotate(tt * 0.006);
-    x.strokeStyle = 'rgba(180,250,255,.85)';
-    x.lineWidth = 1.4;
-    x.beginPath();
-    for(let i = 0; i < 4; i++){
-      const a = i * 1.5708;
-      x.moveTo(0, 0);
-      x.lineTo(Math.cos(a) * coreR * 0.7, Math.sin(a) * coreR * 0.7);
-    }
-    x.stroke();
-    x.beginPath(); x.arc(0, 0, coreR * 0.22, 0, 6.28319);
-    x.fillStyle = 'rgba(200,255,240,.9)'; x.fill();
-    x.restore();
-
-    /* base pedestal ring (grounds the hub, echoes the reference HUD) */
-    x.strokeStyle = 'rgba(0,229,255,.16)';
-    x.lineWidth = 1;
-    x.beginPath(); x.ellipse(cx, cy + coreR * 3.1, coreR * 1.6, coreR * 0.45, 0, 0, 6.28319); x.stroke();
-
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
 
 /* ===== WALLET GATE — Solana holder check ===== */
 const WG_COLL_ID = "CEYQLZWtF9sqMATXJGkM8UqP5JQjEcCaBBmmXtJkL3pF";
