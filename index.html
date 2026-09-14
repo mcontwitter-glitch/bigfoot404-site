@@ -311,7 +311,17 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
         <div class="wrow"><span class="addr">OPS · warm</span><span class="pct">11.1%</span></div>
         <div class="wrow"><span class="addr">FAUCET</span><span class="pct">4.2%</span></div>
         <div class="wrow"><span class="addr">NODE REWARDS</span><span class="pct">2.3%</span></div>
+      
+      <div class="hud-panel" id="wallet-gate">
+        <div class="hud-panel-header"><span class="hud-panel-title">WALLET GATE // HOLDER CHECK</span><span class="hud-panel-ticks">▢▢▢</span></div>
+        <div class="kv" id="wg-status">
+          <div><b>WALLET</b><span class="dim" id="wg-addr">NOT CONNECTED</span></div>
+          <div><b>COLLECTION</b><span class="val">VERIFIED HOLDERS ONLY</span></div>
+          <div><b>ACCESS</b><span class="dim" id="wg-access">LOCKED ◈</span></div>
+        </div>
+        <button id="wg-btn" class="tab active" style="width:100%;justify-content:center;margin-top:10px;color:var(--cyan);font-size:11px;cursor:pointer">CONNECT WALLET</button>
       </div>
+</div>
     </div>
   </div>
   </div><!-- /main-view -->
@@ -415,6 +425,97 @@ setInterval(addLog,3200);
 /* data stream jitter */
 function setD(id,v,j){document.getElementById(id).textContent=v+(Math.random()*j).toFixed(1);}
 setInterval(()=>{setD('dtps',2,4);setD('dlat',150,30);setD('dcpu',10,8);setD('dmsg',80,25);},2000);
+
+/* ===== WALLET GATE — Solana holder check ===== */
+const WG_COLL_ID = "CEYQLZWtF9sqMATXJGkM8UqP5JQjEcCaBBmmXtJkL3pF";
+const WG_RPC = "https://api.mainnet-beta.solana.com";
+const wgBtn = document.getElementById('wg-btn');
+const wgAddr = document.getElementById('wg-addr');
+const wgAccess = document.getElementById('wg-access');
+
+function wgProvider(){
+  const w = window;
+  if (w.phantom?.solana?.isPhantom) return w.phantom.solana;
+  if (w.solana?.isPhantom) return w.solana;
+  if (w.solflare?.isSolflare) return w.solflare;
+  if (w.backpack?.isBackpack) return w.backpack;
+  return null;
+}
+
+async function wgRpc(method, params){
+  try{
+    const r = await fetch(WG_RPC, {method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({jsonrpc:"2.0", id:1, method, params}), signal: AbortSignal.timeout(15000)});
+    return await r.json();
+  }catch(e){ return {error: String(e)}; }
+}
+
+async function wgCountNft(owner){
+  let found = 0, page = 1;
+  while (page <= 5){
+    const j = await wgRpc("getAssetsByOwner", {ownerAddress: owner, page, limit: 1000});
+    const items = j?.result?.items;
+    if (!Array.isArray(items)) break;
+    for (const a of items){
+      if ((a.grouping || []).some(g => g.group_key === "collection" && g.group_value === WG_COLL_ID)) found++;
+    }
+    if (items.length < 1000) break;
+    page++;
+  }
+  return found;
+}
+
+async function wgCountFungible(owner){
+  const j = await wgRpc("getTokenAccountsByOwner", [owner, {mint: WG_COLL_ID}, {encoding: "jsonParsed"}]);
+  const vals = j?.result?.value;
+  if (!Array.isArray(vals)) return 0;
+  let amt = 0;
+  for (const v of vals){
+    const ui = v?.account?.data?.parsed?.info?.tokenAmount?.uiAmount;
+    if (ui && ui > 0) amt += ui;
+  }
+  return amt > 0 ? Math.max(1, Math.round(amt)) : 0;
+}
+
+wgBtn.addEventListener('click', async () => {
+  const p = wgProvider();
+  if (!p){
+    wgAddr.textContent = 'NO WALLET FOUND';
+    wgAccess.textContent = 'INSTALL PHANTOM ◈';
+    wgAccess.style.color = 'var(--danger)';
+    wgBtn.textContent = 'GET PHANTOM → phantom.app';
+    window.open('https://phantom.app', '_blank');
+    return;
+  }
+  wgBtn.textContent = 'CONNECTING…';
+  wgBtn.style.pointerEvents = 'none';
+  try{
+    const resp = await p.connect();
+    const pk = (resp?.publicKey || p.publicKey)?.toString?.();
+    if (!pk) throw new Error('no public key returned');
+    wgAddr.textContent = pk.slice(0,4) + '…' + pk.slice(-4);
+    wgAccess.textContent = 'CHECKING CHAIN…';
+    wgAccess.style.color = 'var(--text-dim)';
+    const [nft, fung] = await Promise.all([wgCountNft(pk), wgCountFungible(pk)]);
+    const held = nft + fung;
+    if (held > 0){
+      wgAccess.textContent = 'UNLOCKED ✓ ' + held + (nft > 0 ? ' NFT' : ' TOKEN') + (held>1?'S':'');
+      wgAccess.style.color = 'var(--green)';
+      wgAccess.style.textShadow = '0 0 8px rgba(0,255,200,.5)';
+      wgBtn.textContent = 'WALLET CONNECTED ✓';
+    } else {
+      wgAccess.textContent = 'LOCKED ◈ 0 COLLECTION ASSETS';
+      wgAccess.style.color = 'var(--danger)';
+      wgBtn.textContent = 'NOT A HOLDER — CHECK ANOTHER';
+    }
+  }catch(err){
+    wgAddr.textContent = 'NOT CONNECTED';
+    wgAccess.textContent = 'CONNECTION CANCELLED ◈';
+    wgAccess.style.color = 'var(--danger)';
+    wgBtn.textContent = 'CONNECT WALLET';
+  }
+  wgBtn.style.pointerEvents = '';
+});
 </script>
 </body>
 </html>
