@@ -50,6 +50,24 @@ body{
 .brand .x404{color:#eafcff;text-shadow:0 0 10px var(--cyan-glow)}
 .brand-sub{font-size:10px;color:var(--text-dim);letter-spacing:.22em;margin-top:4px}
 .livepill{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.18em;color:var(--green)}
+
+/* topbar wallet gate */
+.topbar-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.wg-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;
+  border:1px solid rgba(0,234,255,.35);background:rgba(2,10,18,.72);padding:7px 12px;
+  box-shadow:0 0 14px rgba(0,234,255,.14), inset 0 0 18px rgba(0,234,255,.05)}
+.wg-title{font-size:10px;letter-spacing:.2em;color:var(--cyan);text-shadow:0 0 8px var(--cyan-glow)}
+.wg-addr{font-size:10px;letter-spacing:.12em;color:var(--text-dim)}
+.wg-access{font-size:10px;letter-spacing:.12em;color:var(--text-dim)}
+.wg-btn{cursor:pointer;background:transparent;border:1px solid rgba(0,234,255,.55);color:var(--cyan);
+  font-family:inherit;font-size:10px;letter-spacing:.16em;padding:5px 12px;
+  text-shadow:0 0 8px var(--cyan-glow);transition:background .15s}
+.wg-btn:hover{background:rgba(0,234,255,.12)}
+@media (max-width:960px){
+  .topbar{justify-content:center;text-align:center}
+  .topbar-right{align-items:center}
+  .wg-bar{justify-content:center}
+}
 .led{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:blink 1.6s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
@@ -179,7 +197,15 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
       <div class="brand">BIGFOOT<span class="x404">404</span> LLC // COMPANY NETWORK</div>
       <div class="brand-sub">REAL ESTATE WHOLESALE · BIG NETWORK · NEW YORK CITY</div>
     </div>
-    <div class="livepill"><span class="led"></span> SYSTEMS NOMINAL · PIPELINE LIVE</div>
+    <div class="topbar-right">
+      <div class="wg-bar" id="wallet-gate">
+        <span class="wg-title">WALLET GATE // HOLDERS ONLY</span>
+        <span class="wg-addr" id="wg-addr">NOT CONNECTED</span>
+        <span class="wg-access" id="wg-access">LOCKED ◈</span>
+        <button id="wg-btn" class="wg-btn">CONNECT WALLET</button>
+      </div>
+      <div class="livepill"><span class="led"></span> SYSTEMS NOMINAL · PIPELINE LIVE</div>
+    </div>
   </div>
 
 
@@ -338,15 +364,6 @@ footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spac
         <div class="wrow"><span class="addr">FAUCET</span><span class="pct">4.2%</span></div>
         <div class="wrow"><span class="addr">NODE REWARDS</span><span class="pct">2.3%</span></div>
       
-      <div class="hud-panel" id="wallet-gate">
-        <div class="hud-panel-header"><span class="hud-panel-title">WALLET GATE // HOLDER CHECK</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="kv" id="wg-status">
-          <div><b>WALLET</b><span class="dim" id="wg-addr">NOT CONNECTED</span></div>
-          <div><b>COLLECTION</b><span class="val">VERIFIED HOLDERS ONLY</span></div>
-          <div><b>ACCESS</b><span class="dim" id="wg-access">LOCKED ◈</span></div>
-        </div>
-        <button id="wg-btn" class="tab active" style="width:100%;justify-content:center;margin-top:10px;color:var(--cyan);font-size:11px;cursor:pointer">CONNECT WALLET</button>
-      </div>
 </div>
     </div>
   </div>
