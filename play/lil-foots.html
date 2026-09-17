@@ -32,7 +32,17 @@ function resize(){
   H = cv.height = innerHeight * devicePixelRatio;
   SCALE = Math.max(W/1280, H/720) * (devicePixelRatio>1?1:1);
   // world zoom so the action reads at phone size
-  ZOOM = Math.min(W,1600)/1280 * 1.0;
+  // v0.9.1 FRAMING (Bude: "lower the plane where the player runs — it's so high
+  // up in the screen"): old zoom was WIDTH-only, so tall phone screens pushed the
+  // walk line into the top quarter of the screen w/ a giant earth block under it.
+  // Now the zoom also guarantees the walk line sits ~68% down the screen, in every
+  // orientation and every pixel ratio: upper 2/3 = sky + distance, lower 1/3 = the
+  // solid ground you run on.
+  const dpr = devicePixelRatio || 1;
+  const cw = W/dpr, ch = H/dpr;             // CSS-pixel viewport
+  const zoomW = Math.min(cw,1600)/1280;    // the old width-based term
+  const zoomH = ch*0.68/GROUND_Y;           // walk line >= 68% down the screen
+  ZOOM = dpr * Math.min(Math.max(zoomW, zoomH), 1.5);
 }
 let ZOOM = 1;
 addEventListener("resize", resize);
@@ -1039,7 +1049,7 @@ function drawHUD(){
     ctx.fillText("< pick your Lil Foot >  —  TAP or SPACE to start", W/2, H*0.74);
     ctx.globalAlpha=1;
     ctx.font="14px Trebuchet MS"; ctx.fillStyle="#8fb8a4";
-    ctx.fillText("Vertical Slice v0.8 — BACKGROUND DEPTH PLATE (Bude: upper half = distance, lower half = playable forest, one continuous scene)", W/2, H*0.92);
+    ctx.fillText("Vertical Slice v0.9.1 — GROUNDED WORLD + gameplay plane lowered to the lower third (Bude) (Bude: upper half = distance, lower half = playable forest, one continuous scene)", W/2, H*0.92);
     return;
   }
   // token counter
