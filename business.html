@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bigfoot404 LLC — IRL Business (Real Estate Wholesaling)</title>
+<meta name="description" content="Bigfoot404 LLC — the IRL side: nationwide real estate wholesaling, cash buyer network, and deal pipeline."/>
+<link rel="icon" type="image/png" href="assets/logo-bw.png"/>
+<style>
+:root{
+  --bg:#000000;
+  --bg2:#050a06;
+  --panel:#0a120c;
+  --green:#3dff7a;
+  --green-dim:#1c7a3c;
+  --green-glow:rgba(61,255,122,.55);
+  --text:#d9ffe4;
+  --text-dim:#7ea88c;
+  --border:rgba(61,255,122,.28);
+  --font-head:Georgia,'Times New Roman',serif;
+  --font-body:Verdana,Arial,Helvetica,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);width:100%}
+body{
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%,rgba(30,120,60,.18),transparent 70%),
+    var(--bg);
+}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 24px 60px}
+
+/* ===== top brand row ===== */
+.brandrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:46px;height:46px;background:#fff;border-radius:6px;padding:4px;filter:drop-shadow(0 0 8px var(--green-glow))}
+.brand-text h1{font-family:var(--font-head);font-size:22px;letter-spacing:.04em;text-decoration:underline;text-decoration-color:var(--green-dim)}
+.brand-text p{font-size:11px;color:var(--text-dim);letter-spacing:.08em;margin-top:2px}
+.netpills{display:flex;gap:8px;flex-wrap:wrap}
+.netpill{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);
+  border:1px solid var(--border);background:rgba(61,255,122,.05);padding:7px 13px;transition:.15s}
+.netpill:hover{color:var(--green);border-color:var(--green);box-shadow:0 0 10px rgba(61,255,122,.2);text-decoration:none}
+
+/* ===== primary nav ===== */
+.nav{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:12px 0;margin-bottom:30px}
+.nav a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:9px 18px;text-decoration:none;transition:.15s}
+.nav a:hover{color:var(--green);border-color:var(--green-dim)}
+.nav a.active{color:var(--green);border-color:var(--green-dim);box-shadow:0 0 10px rgba(61,255,122,.15)}
+
+/* ===== hero ===== */
+.hero{display:flex;align-items:center;gap:30px;flex-wrap:wrap;margin-bottom:50px}
+.hero-text{flex:1 1 340px;min-width:280px}
+.hero-text h2{font-family:var(--font-head);font-size:28px;color:#fff;margin-bottom:10px}
+.hero-text p{font-size:13.5px;line-height:1.7;color:var(--text-dim);margin-bottom:14px}
+.hero-text a.more{font-weight:bold;color:var(--green);font-size:13px}
+.hero-img{flex:1 1 280px;min-width:220px;text-align:center}
+.hero-img img{max-width:280px;width:100%;filter:drop-shadow(0 0 24px var(--green-glow))}
+
+/* ===== three-col ===== */
+.threecol{display:flex;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:34px 0;margin-bottom:50px}
+.col{flex:1;padding:0 26px;position:relative}
+.col:not(:first-child){border-left:1px solid var(--border)}
+.col-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.col-head img{width:34px;height:34px;filter:drop-shadow(0 0 6px var(--green-glow))}
+.col-head h3{font-size:14px;letter-spacing:.05em;color:var(--green);text-transform:uppercase}
+.col p{font-size:12.5px;line-height:1.7;color:var(--text-dim)}
+
+/* ===== two-col: highlights + services ===== */
+.twocol{display:flex;gap:40px;flex-wrap:wrap;margin-bottom:50px}
+.twocol .block{flex:1;min-width:260px}
+.twocol h3{font-family:var(--font-head);font-size:17px;color:#fff;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.hl-item{display:flex;gap:10px;margin-bottom:16px}
+.hl-item img{width:22px;height:22px;flex-shrink:0;margin-top:2px}
+.hl-item p{font-size:12.5px;color:var(--text-dim);line-height:1.6}
+.hl-item strong{color:var(--text);display:block;font-size:13px;margin-bottom:2px}
+.svc-list{list-style:none;columns:2;column-gap:24px;font-size:12.5px}
+.svc-list li{margin-bottom:11px;border-bottom:1px dotted rgba(61,255,122,.15);padding-bottom:8px}
+
+/* ===== content sections ===== */
+.section{padding:26px 0;border-top:1px solid var(--border)}
+.section h2{font-family:var(--font-head);font-size:19px;color:#fff;margin-bottom:12px}
+.section p{font-size:13px;line-height:1.75;color:var(--text-dim);max-width:760px}
+.contact-grid{display:flex;gap:30px;flex-wrap:wrap;margin-top:14px}
+.contact-grid div{font-size:12.5px;color:var(--text-dim)}
+.contact-grid strong{color:var(--green);display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+
+/* ===== footer ===== */
+.footer{margin-top:40px;border-top:1px solid var(--border);padding-top:18px}
+.footer-nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:11px;margin-bottom:12px}
+.footer-nav a{color:var(--text-dim)}
+.footer-nav a:hover{color:var(--green)}
+.copy{text-align:center;font-size:10.5px;color:var(--text-dim);letter-spacing:.03em}
+
+@media(max-width:760px){
+  .threecol{flex-direction:column}
+  .col{border-left:none!important;padding:14px 0;border-top:1px solid var(--border)}
+  .col:first-child{border-top:none;padding-top:0}
+  .svc-list{columns:1}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brandrow">
+    <div class="brand">
+      <img src="assets/logo-bw.png" alt="Bigfoot404 logo"/>
+      <div class="brand-text">
+        <h1>BIGFOOT404 LLC</h1>
+        <p>REAL ESTATE · BLOCKCHAIN · BIGFOOT COUNTRY</p>
+      </div>
+    </div>
+    <div class="netpills">
+      <a class="netpill" href="index.html">Main Site</a>
+      <a class="netpill" href="https://node.bigfoot404.biz" target="_blank" rel="noopener">Node</a>
+      <a class="netpill" href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Wallet</a>
+      <a class="netpill" href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan</a>
+      <a class="netpill" href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">CRM</a>
+    </div>
+  </div>
+
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a class="active" href="#partners">Partners</a>
+    <a href="#support">Support</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h2>Welcome to Bigfoot404 LLC <span style="font-size:13px;color:var(--green);letter-spacing:.08em;text-transform:uppercase">· The IRL Business</span></h2>
+      <p>We find off-market properties nationwide, make sellers a fast 60% cash offer, and assign the contract to our network of institutional and regional cash buyers. Above ground, that's the business. Underneath it, we run the BIG Network — Bigfoot404's own Solana-based blockchain powering our corporate treasury and digital assets.</p>
+      <a class="more" href="#about">Learn more about us &raquo;</a>
+    </div>
+    <div class="hero-img">
+      <img src="assets/hero-plant.png" alt="Growth"/>
+    </div>
+  </div>
+
+  <div class="threecol">
+    <div class="col">
+      <div class="col-head"><img src="assets/icon-offers.png" alt=""/><h3>Our Offers</h3></div>
+      <p>We contact owner-listed (FSBO) properties directly and extend a fair, fast 60% cash offer — no listing fees, no repairs, no waiting on financing. Sellers close on their timeline, as-is.</p>
+    </div>
+    <div class="col">
+      <div class="col-head"><img src="assets/icon-network.png" alt=""/><h3>Our Network</h3></div>
+      <p>Every accepted contract is assigned to a vetted cash buyer from our nationwide network — institutional funds, regional investors, and iBuyers — closing deals across every major U.S. market.</p>
+    </div>
+    <div class="col">
+      <div class="col-head"><img src="assets/icon-growth.png" alt=""/><h3>Our Growth</h3></div>
+      <p>Beyond real estate, Bigfoot404 LLC operates the BIG Network — a company-owned blockchain treasury, wallet, and explorer built to grow alongside the wholesaling business.</p>
+    </div>
+  </div>
+
+  <div class="twocol">
+    <div class="block">
+      <h3>Company Highlights</h3>
+      <div class="hl-item">
+        <img src="assets/icon-offers.png" alt=""/>
+        <p><strong>Nationwide pipeline</strong>Thousands of tracked leads and a property pipeline spanning every major U.S. market.</p>
+      </div>
+      <div class="hl-item">
+        <img src="assets/icon-network.png" alt=""/>
+        <p><strong>50+ cash buyers</strong>A curated buyer network covering institutional funds and regional investors across CA, TX, NY, FL, CO, and beyond.</p>
+      </div>
+      <div class="hl-item">
+        <img src="assets/icon-growth.png" alt=""/>
+        <p><strong>BIG Network</strong>A company-owned Solana-based chain — corporate treasury, wallet, node, and explorer, all under one roof.</p>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Our Services</h3>
+      <ul class="svc-list">
+        <li><a href="#services">Real Estate Wholesaling</a></li>
+        <li><a href="#partners">Cash Buyer Network</a></li>
+        <li><a href="#services">Purchase &amp; Assignment Contracts</a></li>
+        <li><a href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">Wholesale CRM</a></li>
+        <li><a href="https://node.bigfoot404.biz" target="_blank" rel="noopener">BIG Network Node</a></li>
+        <li><a href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">BIG Wallet</a></li>
+        <li><a href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan Explorer</a></li>
+        <li><a href="#support">Investor Support</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section" id="about">
+    <h2>About Bigfoot404 LLC</h2>
+    <p>Bigfoot404 LLC is a New York-based real estate wholesaling company. We identify owner-listed properties, make fast cash offers, and connect motivated sellers with a nationwide network of cash buyers — turning slow, uncertain sales into simple, as-is closings. Alongside the real estate business, we built and operate the BIG Network: our own company blockchain, wallet, and explorer, run with the same standards we hold our real estate operations to.</p>
+  </div>
+
+  <div class="section" id="services">
+    <h2>Services</h2>
+    <p>Real Estate Wholesaling &middot; Cash Offers on Off-Market Properties &middot; Purchase &amp; Sale Agreements with Assignment Rights &middot; Assignment Contracts for Cash Buyers &middot; Wholesale CRM &amp; Deal Pipeline &middot; BIG Network Node Hosting &middot; BIG Wallet &middot; BigScan Chain Explorer.</p>
+  </div>
+
+  <div class="section" id="partners">
+    <h2>Partners</h2>
+    <p>Our cash buyer network spans institutional real estate funds, regional investment groups, and iBuyers across every major U.S. market — matched deal-by-deal to move fast on the properties we bring to contract.</p>
+  </div>
+
+  <div class="section" id="support">
+    <h2>Support</h2>
+    <p>Have a property to sell, a deal to review, or a question about the BIG Network? Reach our team directly — we respond fast.</p>
+    <div class="contact-grid">
+      <div><strong>Email</strong><a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a></div>
+      <div><strong>Phone</strong><a href="tel:18004044187">1-800-404-4187</a></div>
+      <div><strong>Address</strong>800 3rd Ave, New York, NY 10022</div>
+    </div>
+  </div>
+
+  <div class="section" id="contact">
+    <h2>Contact</h2>
+    <p>Sellers, buyers, and partners — get in touch any time at <a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a> or <a href="tel:18004044187">1-800-404-4187</a>. For BIG Network access, use the Node, Wallet, and BigScan links above.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-nav">
+      <a href="index.html">Home</a>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#partners">Partners</a>
+      <a href="#support">Support</a>
+      <a href="#contact">Contact</a>
+      <a href="https://node.bigfoot404.biz" target="_blank" rel="noopener">Node</a>
+      <a href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Wallet</a>
+      <a href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan</a>
+      <a href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">CRM</a>
+    </div>
+    <div class="copy">Bigfoot404 LLC &copy; 2026 &nbsp;|&nbsp; 800 3rd Ave, New York, NY 10022 &nbsp;|&nbsp; 1-800-404-4187</div>
+  </div>
+
+</div>
+</body>
+</html>

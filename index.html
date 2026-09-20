@@ -3,103 +3,145 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Bigfoot404 LLC — Real Estate. Blockchain. Bigfoot Country.</title>
-<meta name="description" content="Bigfoot404 LLC — nationwide real estate wholesaling and the BIG Network, our Solana-based corporate blockchain."/>
-<link rel="icon" type="image/png" href="assets/leaf-icon.png"/>
+<title>Bigfoot 404 | Real-World NFT Utility — $BIG Token, NFTs, RWA</title>
+<meta name="description" content="Bigfoot 404 bridges Web3 and real-world assets: 1B $BIG supply, 1,500 NFTs with 5 RWA access traits, 666,666 tokens per NFT swap. Fees fund real real estate development."/>
+<link rel="icon" type="image/png" href="assets/logo-bw.png"/>
 <style>
 :root{
   --bg:#000000;
-  --bg2:#050a06;
   --panel:#0a120c;
   --green:#3dff7a;
   --green-dim:#1c7a3c;
   --green-glow:rgba(61,255,122,.55);
   --text:#d9ffe4;
-  --text-dim:#7ea88c;
+  --dim:#7ea88c;
   --border:rgba(61,255,122,.28);
-  --font-head:Georgia,'Times New Roman',serif;
-  --font-body:Verdana,Arial,Helvetica,sans-serif;
+  --gold:#e8c35a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);width:100%}
-body{
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 0%,rgba(30,120,60,.18),transparent 70%),
-    var(--bg);
-}
+html,body{background:var(--bg);color:var(--text);font-family:Verdana,Arial,Helvetica,sans-serif;width:100%}
+body{background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(30,120,60,.18),transparent 70%),var(--bg)}
 a{color:var(--green);text-decoration:none}
 a:hover{text-decoration:underline}
 .wrap{max-width:1100px;margin:0 auto;padding:22px 24px 60px}
 
-/* ===== top brand row ===== */
+/* brand row */
 .brandrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-bottom:16px}
 .brand{display:flex;align-items:center;gap:12px}
-.brand img{width:42px;height:42px;filter:drop-shadow(0 0 8px var(--green-glow))}
-.brand-text h1{font-family:var(--font-head);font-size:22px;letter-spacing:.04em;text-decoration:underline;text-decoration-color:var(--green-dim)}
-.brand-text p{font-size:11px;color:var(--text-dim);letter-spacing:.08em;margin-top:2px}
+.brand img{width:52px;height:52px;filter:grayscale(1) drop-shadow(0 0 8px var(--green-glow));background:#fff;border-radius:6px;padding:5px}
+.brand-text h1{font-size:21px;letter-spacing:.04em;color:#fff}
+.brand-text p{font-size:11px;color:var(--dim);letter-spacing:.08em;margin-top:2px}
 .netpills{display:flex;gap:8px;flex-wrap:wrap}
-.netpill{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);
+.netpill{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
   border:1px solid var(--border);background:rgba(61,255,122,.05);padding:7px 13px;transition:.15s}
 .netpill:hover{color:var(--green);border-color:var(--green);box-shadow:0 0 10px rgba(61,255,122,.2);text-decoration:none}
 
-/* ===== primary nav ===== */
-.nav{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:12px 0;margin-bottom:30px}
-.nav a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);
+/* nav */
+.nav{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;margin-bottom:34px}
+.nav a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
   background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:9px 18px;text-decoration:none;transition:.15s}
 .nav a:hover{color:var(--green);border-color:var(--green-dim)}
 .nav a.active{color:var(--green);border-color:var(--green-dim);box-shadow:0 0 10px rgba(61,255,122,.15)}
+.nav a.cta-nav{color:#000;background:var(--green);border-color:var(--green);font-weight:bold}
+.nav a.cta-nav:hover{box-shadow:0 0 14px var(--green-glow);color:#000}
 
-/* ===== hero ===== */
-.hero{display:flex;align-items:center;gap:30px;flex-wrap:wrap;margin-bottom:50px}
-.hero-text{flex:1 1 340px;min-width:280px}
-.hero-text h2{font-family:var(--font-head);font-size:28px;color:#fff;margin-bottom:10px}
-.hero-text p{font-size:13.5px;line-height:1.7;color:var(--text-dim);margin-bottom:14px}
-.hero-text a.more{font-weight:bold;color:var(--green);font-size:13px}
-.hero-img{flex:1 1 280px;min-width:220px;text-align:center}
-.hero-img img{max-width:280px;width:100%;filter:drop-shadow(0 0 24px var(--green-glow))}
+/* hero */
+.hero{margin-bottom:44px}
+.hero h2{font-size:29px;line-height:1.25;color:#fff;margin-bottom:14px;max-width:840px}
+.hero h2 em{color:var(--green);font-style:normal}
+.hero p{font-size:13.5px;line-height:1.75;color:var(--dim);max-width:780px;margin-bottom:18px}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 24px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;font-weight:bold;transition:.15s}
+.btn.primary{background:var(--green);color:#000;border:1px solid var(--green)}
+.btn.primary:hover{box-shadow:0 0 16px var(--green-glow);text-decoration:none}
+.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--green-dim)}
+.btn.ghost:hover{border-color:var(--green);box-shadow:0 0 10px rgba(61,255,122,.2);text-decoration:none}
 
-/* ===== three-col ===== */
-.threecol{display:flex;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  padding:34px 0;margin-bottom:50px}
-.col{flex:1;padding:0 26px;position:relative}
+/* stats */
+.stats{display:flex;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:30px 0;margin-bottom:44px;flex-wrap:wrap}
+.stat{flex:1;min-width:200px;padding:0 22px;text-align:center}
+.stat:not(:first-child){border-left:1px solid var(--border)}
+.stat .v{font-size:22px;color:var(--green);font-weight:bold;margin-bottom:6px}
+.stat .k{font-size:11px;color:var(--dim);line-height:1.5;letter-spacing:.04em}
+
+/* wallet panel */
+.panel{border:1px solid var(--border);background:var(--panel);padding:26px;margin-bottom:44px}
+.panel-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.panel-head h3{font-size:15px;letter-spacing:.06em;color:var(--green);text-transform:uppercase}
+.panel-sub{font-size:12px;color:var(--dim);margin-bottom:18px;line-height:1.6}
+.wallet-grid{display:flex;gap:18px;flex-wrap:wrap}
+.wcard{flex:1;min-width:230px;border:1px solid var(--border);background:rgba(61,255,122,.03);padding:18px}
+.wcard h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.wcard p{font-size:12px;color:var(--dim);line-height:1.6;margin-bottom:12px}
+.winput{width:100%;background:#04120a;border:1px solid var(--border);color:var(--text);font-family:monospace;font-size:12px;padding:10px;margin-bottom:10px}
+.winput:focus{outline:none;border-color:var(--green)}
+.wbtn{width:100%;background:var(--green);color:#000;border:none;padding:11px;font-weight:bold;font-size:12px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:.15s;display:block;text-align:center}
+.wbtn:hover{box-shadow:0 0 12px var(--green-glow);text-decoration:none}
+.wbtn.secondary{background:transparent;color:var(--green);border:1px solid var(--green-dim)}
+.holdout{margin-top:10px;font-size:12px;line-height:1.7;display:none;border:1px solid var(--border);background:rgba(61,255,122,.04);padding:12px}
+.holdout.show{display:block}
+.holdout .big{color:var(--green);font-size:15px;font-weight:bold}
+.holdout .warn{color:var(--gold)}
+.kv{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--dim);margin-top:6px}
+.kv b{color:var(--text)}
+
+/* token/nft cards */
+.trio{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:44px}
+.tcard{flex:1;min-width:250px;border:1px solid var(--border);background:var(--panel);padding:22px}
+.tcard h4{font-size:13px;color:#fff;margin-bottom:12px;letter-spacing:.04em}
+.tcard .tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(232,195,90,.4);padding:3px 8px;display:inline-block;margin-bottom:12px}
+.tcard ul{list-style:none}
+.tcard li{font-size:12px;color:var(--dim);line-height:1.65;padding:7px 0;border-bottom:1px dotted rgba(61,255,122,.15)}
+.tcard li:last-child{border-bottom:none}
+.tcard li b{color:var(--green)}
+
+/* shop */
+.shop-grid{display:flex;gap:18px;flex-wrap:wrap}
+.shopcard{flex:1;min-width:200px;max-width:260px;border:1px solid var(--border);background:var(--panel);padding:20px;text-align:center}
+.shopcard .ph{height:110px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;border:1px dashed var(--green-dim)}
+.shopcard .ph img{width:64px;height:64px;background:#fff;border-radius:6px;padding:5px}
+.shopcard h5{font-size:12.5px;color:#fff;margin-bottom:6px;letter-spacing:.04em}
+.shopcard p{font-size:11px;color:var(--dim);margin-bottom:12px;line-height:1.5}
+.shopcard a{font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+
+/* sections */
+.section{padding:28px 0;border-top:1px solid var(--border)}
+.section h2{font-size:19px;color:#fff;margin-bottom:14px}
+.section p{font-size:13px;line-height:1.8;color:var(--dim);max-width:800px}
+.phase{margin-bottom:18px}
+.phase h3{font-size:14px;color:var(--green);margin-bottom:8px;letter-spacing:.04em}
+.phase li{font-size:12.5px;color:var(--dim);line-height:1.7;margin-left:18px;margin-bottom:5px}
+.threecol{display:flex;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 0;margin-bottom:44px}
+.col{flex:1;padding:0 24px}
 .col:not(:first-child){border-left:1px solid var(--border)}
-.col-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.col-head img{width:34px;height:34px;filter:drop-shadow(0 0 6px var(--green-glow))}
-.col-head h3{font-size:14px;letter-spacing:.05em;color:var(--green);text-transform:uppercase}
-.col p{font-size:12.5px;line-height:1.7;color:var(--text-dim)}
+.col h4{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+.col p{font-size:12.5px;color:var(--dim);line-height:1.7}
 
-/* ===== two-col: highlights + services ===== */
-.twocol{display:flex;gap:40px;flex-wrap:wrap;margin-bottom:50px}
-.twocol .block{flex:1;min-width:260px}
-.twocol h3{font-family:var(--font-head);font-size:17px;color:#fff;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.hl-item{display:flex;gap:10px;margin-bottom:16px}
-.hl-item img{width:22px;height:22px;flex-shrink:0;margin-top:2px}
-.hl-item p{font-size:12.5px;color:var(--text-dim);line-height:1.6}
-.hl-item strong{color:var(--text);display:block;font-size:13px;margin-bottom:2px}
-.svc-list{list-style:none;columns:2;column-gap:24px;font-size:12.5px}
-.svc-list li{margin-bottom:11px;border-bottom:1px dotted rgba(61,255,122,.15);padding-bottom:8px}
+/* faq */
+.faq details{border:1px solid var(--border);background:var(--panel);margin-bottom:10px}
+.faq summary{cursor:pointer;padding:14px 18px;font-size:13px;color:#fff;list-style:none}
+.faq summary:hover{color:var(--green)}
+.faq details p{padding:0 18px 16px;font-size:12.5px;color:var(--dim);line-height:1.7}
 
-/* ===== content sections ===== */
-.section{padding:26px 0;border-top:1px solid var(--border)}
-.section h2{font-family:var(--font-head);font-size:19px;color:#fff;margin-bottom:12px}
-.section p{font-size:13px;line-height:1.75;color:var(--text-dim);max-width:760px}
-.contact-grid{display:flex;gap:30px;flex-wrap:wrap;margin-top:14px}
-.contact-grid div{font-size:12.5px;color:var(--text-dim)}
-.contact-grid strong{color:var(--green);display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+/* subscribe */
+.subscribe{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.subscribe input{flex:1;min-width:220px;background:#04120a;border:1px solid var(--border);color:var(--text);padding:11px;font-size:13px}
+.subscribe input:focus{outline:none;border-color:var(--green)}
 
-/* ===== footer ===== */
+/* footer */
 .footer{margin-top:40px;border-top:1px solid var(--border);padding-top:18px}
 .footer-nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:11px;margin-bottom:12px}
-.footer-nav a{color:var(--text-dim)}
+.footer-nav a{color:var(--dim)}
 .footer-nav a:hover{color:var(--green)}
-.copy{text-align:center;font-size:10.5px;color:var(--text-dim);letter-spacing:.03em}
+.copy{text-align:center;font-size:10.5px;color:var(--dim);letter-spacing:.03em}
 
 @media(max-width:760px){
+  .stats{flex-direction:column}
+  .stat{border-left:none!important;border-top:1px solid var(--border);padding:14px 0;text-align:left}
+  .stat:first-child{border-top:none}
   .threecol{flex-direction:column}
   .col{border-left:none!important;padding:14px 0;border-top:1px solid var(--border)}
-  .col:first-child{border-top:none;padding-top:0}
-  .svc-list{columns:1}
+  .col:first-child{border-top:none}
 }
 </style>
 </head>
@@ -108,130 +150,297 @@ a:hover{text-decoration:underline}
 
   <div class="brandrow">
     <div class="brand">
-      <img src="assets/leaf-icon.png" alt="Bigfoot404"/>
+      <img src="assets/logo-bw.png" alt="Bigfoot 404 logo"/>
       <div class="brand-text">
-        <h1>BIGFOOT404 LLC</h1>
-        <p>REAL ESTATE · BLOCKCHAIN · BIGFOOT COUNTRY</p>
+        <h1>BIGFOOT 404</h1>
+        <p>REAL-WORLD NFT UTILITY · MPL-404 · RWA</p>
       </div>
     </div>
     <div class="netpills">
       <a class="netpill" href="https://node.bigfoot404.biz" target="_blank" rel="noopener">Node</a>
       <a class="netpill" href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Wallet</a>
       <a class="netpill" href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan</a>
-      <a class="netpill" href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">CRM</a>
+      <a class="netpill" href="business.html">IRL Business</a>
     </div>
   </div>
 
   <div class="nav">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a class="active" href="#partners">Partners</a>
-    <a href="#support">Support</a>
-    <a href="#contact">Contact</a>
+    <a class="active" href="#top">Home</a>
+    <a href="#wallet">Wallet</a>
+    <a href="#token">$BIG</a>
+    <a href="#nft">NFTs</a>
+    <a href="#shop">Shop</a>
+    <a href="#path">The Path</a>
+    <a href="#faq">FAQ</a>
+    <a href="business.html">IRL Business</a>
+    <a class="cta-nav" href="#wallet">Connect Wallet</a>
   </div>
 
-  <div class="hero">
-    <div class="hero-text">
-      <h2>Welcome to Bigfoot404 LLC</h2>
-      <p>We find off-market properties nationwide, make sellers a fast 60% cash offer, and assign the contract to our network of institutional and regional cash buyers. Above ground, that's the business. Underneath it, we run the BIG Network — Bigfoot404's own Solana-based blockchain powering our corporate treasury and digital assets.</p>
-      <a class="more" href="#about">Learn more about us &raquo;</a>
+  <div class="hero" id="top">
+    <h2>Bridging the Gap: Bringing <em>Real-World Value and Utility</em> to Web3 Projects.</h2>
+    <p>Bigfoot 404 ties digital assets to physical real estate. Acquire $BIG tokens, swap them for NFTs, and your NFT becomes your key to real-world assets — property developments funded by the community, documented from groundbreaking to grand opening. This is the next evolution of MPL-404 and RWA utility.</p>
+    <div class="hero-btns">
+      <a class="btn primary" href="#wallet">Connect Wallet</a>
+      <a class="btn ghost" href="#token">Explore $BIG</a>
     </div>
-    <div class="hero-img">
-      <img src="assets/hero-plant.png" alt="Growth"/>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="v">1,000,000,000</div><div class="k">$BIG token supply</div></div>
+    <div class="stat"><div class="v">1,500</div><div class="k">NFTs with unique traits</div></div>
+    <div class="stat"><div class="v">5</div><div class="k">NFT traits &mdash; different levels of RWA access</div></div>
+    <div class="stat"><div class="v">666,666</div><div class="k">tokens required to swap for 1 NFT</div></div>
+  </div>
+
+  <div class="panel" id="wallet">
+    <div class="panel-head"><h3>Wallet Connect</h3></div>
+    <p class="panel-sub">Connect your BIG wallet to check holder status, swap tokens for NFTs, and view your RWA access level. New here? Create a wallet in the BIG Wallet app first.</p>
+    <div class="wallet-grid">
+      <div class="wcard">
+        <h4>Connect / Create Wallet</h4>
+        <p>The BIG Wallet holds your $BIG tokens and NFTs on the BIG Network. Create one in seconds, then check your holder status here.</p>
+        <a class="wbtn" href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Open BIG Wallet ▸</a>
+      </div>
+      <div class="wcard">
+        <h4>Check Holder Status</h4>
+        <p>Already holding? Paste your BIG address to verify your $BIG balance and NFT holder status.</p>
+        <input class="winput" id="holderAddr" placeholder="Your BIG wallet address"/>
+        <button class="wbtn" id="btnCheckHolder" onclick="checkHolder()">Check Status</button>
+        <div class="holdout" id="holderOut"></div>
+      </div>
+      <div class="wcard">
+        <h4>Swap Tokens → NFT</h4>
+        <p>Swap 666,666 $BIG for 1 Bigfoot 404 NFT through the BIG Network exchange. Swap fees feed directly into RWA funding.</p>
+        <a class="wbtn secondary" href="https://swap.bigfoot404.com/" target="_blank" rel="noopener">Open Swap ▸</a>
+      </div>
+    </div>
+    <div class="kv" style="margin-top:16px">
+      <span>Holder perks:</span>
+      <b>RWA access per trait</b> <span>·</span> <b>IRL job opportunities</b> <span>·</span> <b>event access</b> <span>·</span> <b>community development voting</b>
+    </div>
+  </div>
+
+  <div class="trio">
+    <div class="tcard" id="token">
+      <span class="tag">Token Details</span>
+      <h4>$BIG Token</h4>
+      <ul>
+        <li><b>Supply:</b> 1,000,000,000 $BIG</li>
+        <li><b>Standard:</b> MPL-404 (hybrid token ⇄ NFT)</li>
+        <li><b>Swap rate:</b> 666,666 $BIG = 1 NFT</li>
+        <li><b>Fee collection:</b> directly tied to RWA funding</li>
+        <li><b>Network:</b> BIG Network — Bigfoot404's own chain</li>
+      </ul>
+    </div>
+    <div class="tcard" id="nft">
+      <span class="tag">NFT Collection</span>
+      <h4>Bigfoot 404 NFTs</h4>
+      <ul>
+        <li><b>Collection size:</b> 1,500 NFTs with unique traits</li>
+        <li><b>Traits:</b> 5 trait lines with different levels of RWA access</li>
+        <li><b>Mechanic:</b> swap $BIG tokens to mint your NFT</li>
+        <li><b>Utility:</b> access to physical property developments</li>
+        <li><b>Holders gain:</b> IRL jobs, events, partnership programs</li>
+      </ul>
+    </div>
+    <div class="tcard" id="shop">
+      <span class="tag">Merch Shop</span>
+      <h4>Bigfoot404 Shop</h4>
+      <ul>
+        <li><b>Tees &amp; hoodies</b> — Bigfoot404 black &amp; white logo line</li>
+        <li><b>Headwear</b> — caps and beanies</li>
+        <li><b>Sticker packs</b> — Bigfoot lore for your gear</li>
+        <li><b>Holder exclusives</b> — NFT-trait merch drops</li>
+        <li><b>How to order:</b> email <a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="shop-grid" style="margin-bottom:44px">
+    <div class="shopcard">
+      <div class="ph"><img src="assets/logo-bw.png" alt=""/></div>
+      <h5>Bigfoot404 Logo Tee</h5>
+      <p>The black &amp; white mark on black cotton.</p>
+      <a href="mailto:Info@bigfoot404.biz?subject=Shop%20order%3A%20Logo%20Tee">Order ▸</a>
+    </div>
+    <div class="shopcard">
+      <div class="ph"><img src="assets/logo-bw.png" alt=""/></div>
+      <h5>Bigfoot Hoodie</h5>
+      <p>Heavyweight, glow-green stitch accents.</p>
+      <a href="mailto:Info@bigfoot404.biz?subject=Shop%20order%3A%20Hoodie">Order ▸</a>
+    </div>
+    <div class="shopcard">
+      <div class="ph"><img src="assets/logo-bw.png" alt=""/></div>
+      <h5>Logo Cap</h5>
+      <p>Embroidered footprint front and center.</p>
+      <a href="mailto:Info@bigfoot404.biz?subject=Shop%20order%3A%20Cap">Order ▸</a>
+    </div>
+    <div class="shopcard">
+      <div class="ph"><img src="assets/logo-bw.png" alt=""/></div>
+      <h5>Sticker Pack</h5>
+      <p>Bigfoot lore for the laptop and the truck.</p>
+      <a href="mailto:Info@bigfoot404.biz?subject=Shop%20order%3A%20Sticker%20Pack">Order ▸</a>
+    </div>
+  </div>
+
+  <div class="section" id="about">
+    <h2>The Next Evolution of MPL-404 and RWA Utility</h2>
+    <p>Our vision is clear: utilize swap fees from our token supply to fund real-world real estate developments, documenting every step of the process on video — from acquiring the property to building it from the ground up. MPL-404 is a new standard that ties digital assets to real-world property developments. Through a DAO proposal, Bigfoot 404 aims to create a bridge between NFTs and real-world assets, allowing NFT holders access to physical property developments.</p>
+  </div>
+
+  <div class="section" id="path">
+    <h2>The Path to Real-World Utility</h2>
+    <div class="phase">
+      <h3>Phase 1 — The Foundation</h3>
+      <ul>
+        <li>In this phase, NFT holders gain exclusive access to the project, participating in the growth of real-world assets funded by the community.</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <h3>Phase 2 — Development &amp; Growth</h3>
+      <ul>
+        <li>Acquiring property for community development</li>
+        <li>Site development with transparency and input from holders</li>
+        <li>Construction of 5 buildings designed to maximize both community and real-world utility</li>
+        <li>Content marketing to document the journey, ensuring full transparency and engagement</li>
+        <li>Community IRL job opportunities for NFT holders to get involved in the physical building process</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <h3>Phase 3 — Real-World Utility</h3>
+      <ul>
+        <li>RWA Opening Event — a launch party at the property site</li>
+        <li>Networking events for project partners and NFT holders</li>
+        <li>Content House Media — a space for creators and influencers to leverage the RWA for exclusive content</li>
+        <li>Remote job opportunities — ongoing roles in managing the RWA property, available to NFT holders</li>
+        <li>Partnership programs — offering IRL use of the RWA location for businesses, events, and partnerships</li>
+      </ul>
     </div>
   </div>
 
   <div class="threecol">
     <div class="col">
-      <div class="col-head"><img src="assets/icon-offers.png" alt=""/><h3>Our Offers</h3></div>
-      <p>We contact owner-listed (FSBO) properties directly and extend a fair, fast 60% cash offer — no listing fees, no repairs, no waiting on financing. Sellers close on their timeline, as-is.</p>
+      <h4>The Foundation</h4>
+      <p>1 billion $BIG supply, 1,500 NFTs across 5 trait lines, and a 666,666-token swap rate — the MPL-404 base layer that ties every digital asset to real-world funding.</p>
     </div>
     <div class="col">
-      <div class="col-head"><img src="assets/icon-network.png" alt=""/><h3>Our Network</h3></div>
-      <p>Every accepted contract is assigned to a vetted cash buyer from our nationwide network — institutional funds, regional investors, and iBuyers — closing deals across every major U.S. market.</p>
+      <h4>Development &amp; Growth</h4>
+      <p>Swap fees flow straight into property acquisition and construction, with the entire build documented on video for full transparency and community input.</p>
     </div>
     <div class="col">
-      <div class="col-head"><img src="assets/icon-growth.png" alt=""/><h3>Our Growth</h3></div>
-      <p>Beyond real estate, Bigfoot404 LLC operates the BIG Network — a company-owned blockchain treasury, wallet, and explorer built to grow alongside the wholesaling business.</p>
+      <h4>Real-World Utility</h4>
+      <p>NFT holders unlock physical access: IRL jobs, opening events, content house media, remote roles, and partnership use of the property.</p>
     </div>
   </div>
 
-  <div class="twocol">
-    <div class="block">
-      <h3>Company Highlights</h3>
-      <div class="hl-item">
-        <img src="assets/icon-offers.png" alt=""/>
-        <p><strong>Nationwide pipeline</strong>Thousands of tracked leads and a property pipeline spanning every major U.S. market.</p>
-      </div>
-      <div class="hl-item">
-        <img src="assets/icon-network.png" alt=""/>
-        <p><strong>50+ cash buyers</strong>A curated buyer network covering institutional funds and regional investors across CA, TX, NY, FL, CO, and beyond.</p>
-      </div>
-      <div class="hl-item">
-        <img src="assets/icon-growth.png" alt=""/>
-        <p><strong>BIG Network</strong>A company-owned Solana-based chain — corporate treasury, wallet, node, and explorer, all under one roof.</p>
-      </div>
-    </div>
-    <div class="block">
-      <h3>Our Services</h3>
-      <ul class="svc-list">
-        <li><a href="#services">Real Estate Wholesaling</a></li>
-        <li><a href="#partners">Cash Buyer Network</a></li>
-        <li><a href="#services">Purchase &amp; Assignment Contracts</a></li>
-        <li><a href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">Wholesale CRM</a></li>
-        <li><a href="https://node.bigfoot404.biz" target="_blank" rel="noopener">BIG Network Node</a></li>
-        <li><a href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">BIG Wallet</a></li>
-        <li><a href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan Explorer</a></li>
-        <li><a href="#support">Investor Support</a></li>
-      </ul>
-    </div>
+  <div class="section">
+    <h2>Why Web3 Needs Real-World Integration Now</h2>
+    <p>Digital assets need somewhere to stand. Bigfoot 404 connects NFT ownership to land you can walk on, buildings you can work in, and a development process you can be part of. Web3 grows up when it starts paying rent in the real world — and that's exactly what we're building.</p>
   </div>
 
-  <div class="section" id="about">
-    <h2>About Bigfoot404 LLC</h2>
-    <p>Bigfoot404 LLC is a New York-based real estate wholesaling company. We identify owner-listed properties, make fast cash offers, and connect motivated sellers with a nationwide network of cash buyers — turning slow, uncertain sales into simple, as-is closings. Alongside the real estate business, we built and operate the BIG Network: our own company blockchain, wallet, and explorer, run with the same standards we hold our real estate operations to.</p>
+  <div class="section faq" id="faq">
+    <h2>FAQ</h2>
+    <details>
+      <summary>What is Bigfoot 404?</summary>
+      <p>Bigfoot 404 ties digital assets to real-world real estate. Swap fees from the token supply fund physical property developments, with NFT holders gaining access to those assets and real-world opportunities.</p>
+    </details>
+    <details>
+      <summary>What is MPL-404?</summary>
+      <p>MPL-404 is a new standard that ties digital assets to real-world property developments. Through a DAO proposal, Bigfoot 404 creates a bridge between NFTs and real-world assets, allowing NFT holders access to physical property developments.</p>
+    </details>
+    <details>
+      <summary>What is RWA (Real-World Assets)?</summary>
+      <p>RWA stands for Real-World Assets — in the context of Bigfoot 404, physical real estate developments funded through token swaps and NFT sales. The goal is to build out property developments and offer NFT holders access to these assets and various real-world opportunities.</p>
+    </details>
+    <details>
+      <summary>Can I get involved in the real-world development process?</summary>
+      <p>Yes! As a Bigfoot 404 NFT holder, you'll have the opportunity to get involved through IRL job opportunities, community contributions, and potential partnerships.</p>
+    </details>
+    <details>
+      <summary>How can I participate in Bigfoot 404?</summary>
+      <p>Acquire Bigfoot 404 tokens, swap them for NFTs, and become part of the community. Stay tuned for the official NFT mint and property development announcements, as well as opportunities to join the DAO.</p>
+    </details>
+    <details>
+      <summary>Where can I find updates about Bigfoot 404?</summary>
+      <p>All updates are shared on the Bigfoot 404 website, official social channels, and via email for registered participants. Sign up for early access below to stay informed.</p>
+    </details>
   </div>
 
-  <div class="section" id="services">
-    <h2>Services</h2>
-    <p>Real Estate Wholesaling &middot; Cash Offers on Off-Market Properties &middot; Purchase &amp; Sale Agreements with Assignment Rights &middot; Assignment Contracts for Cash Buyers &middot; Wholesale CRM &amp; Deal Pipeline &middot; BIG Network Node Hosting &middot; BIG Wallet &middot; BigScan Chain Explorer.</p>
-  </div>
-
-  <div class="section" id="partners">
-    <h2>Partners</h2>
-    <p>Our cash buyer network spans institutional real estate funds, regional investment groups, and iBuyers across every major U.S. market — matched deal-by-deal to move fast on the properties we bring to contract.</p>
-  </div>
-
-  <div class="section" id="support">
-    <h2>Support</h2>
-    <p>Have a property to sell, a deal to review, or a question about the BIG Network? Reach our team directly — we respond fast.</p>
-    <div class="contact-grid">
-      <div><strong>Email</strong><a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a></div>
-      <div><strong>Phone</strong><a href="tel:18004044187">1-800-404-4187</a></div>
-      <div><strong>Address</strong>800 3rd Ave, New York, NY 10022</div>
-    </div>
-  </div>
-
-  <div class="section" id="contact">
-    <h2>Contact</h2>
-    <p>Sellers, buyers, and partners — get in touch any time at <a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a> or <a href="tel:18004044187">1-800-404-4187</a>. For BIG Network access, use the Node, Wallet, and BigScan links above.</p>
+  <div class="section" id="subscribe">
+    <h2>Subscribe</h2>
+    <p>Sign up with your email address to receive news and updates.</p>
+    <form class="subscribe" action="mailto:Info@bigfoot404.biz" method="post" enctype="text/plain">
+      <input type="email" name="email" placeholder="your@email.com" required/>
+      <button class="btn primary" type="submit">Sign Up</button>
+    </form>
+    <p style="font-size:10.5px;margin-top:10px">We respect your privacy.</p>
   </div>
 
   <div class="footer">
     <div class="footer-nav">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#partners">Partners</a>
-      <a href="#support">Support</a>
-      <a href="#contact">Contact</a>
+      <a href="#top">Home</a>
+      <a href="#wallet">Wallet</a>
+      <a href="#token">$BIG</a>
+      <a href="#nft">NFTs</a>
+      <a href="#shop">Shop</a>
+      <a href="#path">The Path</a>
+      <a href="#faq">FAQ</a>
+      <a href="business.html">IRL Business</a>
       <a href="https://node.bigfoot404.biz" target="_blank" rel="noopener">Node</a>
       <a href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Wallet</a>
       <a href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan</a>
-      <a href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">CRM</a>
     </div>
-    <div class="copy">Bigfoot404 LLC &copy; 2026 &nbsp;|&nbsp; 800 3rd Ave, New York, NY 10022 &nbsp;|&nbsp; 1-800-404-4187</div>
+    <div class="copy">&copy; 2024 Bigfoot404. All Rights Reserved. &middot; Bigfoot404 LLC &middot; info@bigfoot404.biz</div>
   </div>
 
 </div>
+
+<script>
+function fmtBig(n){
+  try{ return Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2}); }
+  catch(e){ return String(n); }
+}
+async function checkHolder(){
+  var out = document.getElementById('holderOut');
+  var btn = document.getElementById('btnCheckHolder');
+  var addr = document.getElementById('holderAddr').value.trim();
+  out.className = 'holdout show';
+  if(!addr){
+    out.innerHTML = '<span class="warn">Enter your BIG wallet address first.</span>';
+    return;
+  }
+  btn.disabled = true; btn.textContent = 'Checking…';
+  var GW = 'https://8f2dvht9slxsi3-9090.proxy.runpod.net';
+  try{
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 12000);
+    var r = await fetch(GW + '/wallet/balance?address=' + encodeURIComponent(addr), {signal: ctrl.signal});
+    clearTimeout(t);
+    var d = await r.json();
+    if(d && d.ok === false){
+      out.innerHTML = '<span class="warn">' + (d.error || 'Address not found on the BIG chain.') + '</span>';
+    } else if(d){
+      var bal = d.balance !== undefined ? d.balance : (d.amount !== undefined ? d.amount : 0);
+      var holder = Number(bal) > 0;
+      var nft = holder && Number(bal) >= 666666 ? Math.floor(Number(bal)/666666) : 0;
+      out.innerHTML =
+        '<div class="big">' + (holder ? '✓ Confirmed $BIG Holder' : 'No $BIG detected yet') + '</div>' +
+        '<div>$BIG balance: <b>' + fmtBig(bal) + '</b></div>' +
+        '<div>NFT eligibility: <b>' + (nft > 0 ? nft + ' NFT' + (nft>1?'s':'') + ' at 666,666 $BIG each' : 'below the 666,666 swap rate') + '</b></div>' +
+        '<div style="margin-top:6px">' + (holder
+          ? 'Holder perks active: RWA access by trait, IRL opportunities, events.'
+          : 'Swap 666,666 $BIG for your first NFT to unlock RWA access.') + '</div>';
+    } else {
+      out.innerHTML = '<span class="warn">Unexpected response from the chain gateway.</span>';
+    }
+  }catch(e){
+    out.innerHTML = '<span class="warn">BIG Network gateway is offline right now (chain node warming up). Your tokens are safe on-chain — try again shortly, or check your address on the BigScan explorer.</span>';
+  }
+  btn.disabled = false; btn.textContent = 'Check Status';
+}
+document.getElementById('holderAddr').addEventListener('keydown', function(e){
+  if(e.key === 'Enter'){ e.preventDefault(); checkHolder(); }
+});
+</script>
 </body>
 </html>
