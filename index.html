@@ -2,565 +2,236 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>BIGFOOT404 // COMPANY NETWORK HUD</title>
-<meta name="description" content="Bigfoot404 LLC — real estate wholesaling, institutional cash buyers, and the BIG Network."/>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2302060c'/><text x='50' y='72' font-size='54' text-anchor='middle' fill='%2300e5ff' font-family='monospace' font-weight='bold'>4</text></svg>"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bigfoot404 LLC — Real Estate. Blockchain. Bigfoot Country.</title>
+<meta name="description" content="Bigfoot404 LLC — nationwide real estate wholesaling and the BIG Network, our Solana-based corporate blockchain."/>
+<link rel="icon" type="image/png" href="assets/leaf-icon.png"/>
 <style>
 :root{
-  --bg:#02060c;
-  --bg-panel:rgba(4,18,28,.72);
-  --cyan:#00e5ff;
-  --cyan-dim:#00bcd4;
-  --cyan-glow:rgba(0,229,255,.55);
-  --green:#00ffc8;
-  --text:#b8f0ff;
-  --text-dim:#5a8a9a;
-  --danger:#ff4466;
-  --panel-border:rgba(0,229,255,.55);
-  --font-hud:'Share Tech Mono',ui-monospace,monospace;
-  --font-display:'Orbitron','Share Tech Mono',sans-serif;
+  --bg:#000000;
+  --bg2:#050a06;
+  --panel:#0a120c;
+  --green:#3dff7a;
+  --green-dim:#1c7a3c;
+  --green-glow:rgba(61,255,122,.55);
+  --text:#d9ffe4;
+  --text-dim:#7ea88c;
+  --border:rgba(61,255,122,.28);
+  --font-head:Georgia,'Times New Roman',serif;
+  --font-body:Verdana,Arial,Helvetica,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font-hud);overflow-x:hidden}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font-body);width:100%}
 body{
   background:
-    radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,60,80,.35),transparent 70%),
-    radial-gradient(ellipse 50% 40% at 50% 100%,rgba(0,40,60,.4),transparent 60%),
-    linear-gradient(180deg,#010308 0%,#020a12 40%,#031018 100%);
+    radial-gradient(ellipse 70% 50% at 50% 0%,rgba(30,120,60,.18),transparent 70%),
+    var(--bg);
 }
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 24px 60px}
 
-/* ===== background video + overlays ===== */
-#bgvid{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.62;filter:saturate(1.1)}
-.bgveil{position:fixed;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(ellipse 90% 70% at 50% 40%,transparent 30%,rgba(2,6,12,.55) 80%),linear-gradient(180deg,rgba(1,3,8,.5),rgba(3,16,24,.35))}
-.scanlines{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.35;mix-blend-mode:multiply;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px)}
+/* ===== top brand row ===== */
+.brandrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding-bottom:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:42px;height:42px;filter:drop-shadow(0 0 8px var(--green-glow))}
+.brand-text h1{font-family:var(--font-head);font-size:22px;letter-spacing:.04em;text-decoration:underline;text-decoration-color:var(--green-dim)}
+.brand-text p{font-size:11px;color:var(--text-dim);letter-spacing:.08em;margin-top:2px}
+.netpills{display:flex;gap:8px;flex-wrap:wrap}
+.netpill{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);
+  border:1px solid var(--border);background:rgba(61,255,122,.05);padding:7px 13px;transition:.15s}
+.netpill:hover{color:var(--green);border-color:var(--green);box-shadow:0 0 10px rgba(61,255,122,.2);text-decoration:none}
 
-.wrap{position:relative;z-index:3;max-width:1280px;margin:0 auto;padding:18px 22px 90px;min-height:100svh;display:flex;flex-direction:column;gap:16px}
-
-/* ===== top bar ===== */
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
-  border-bottom:1px solid var(--panel-border);padding-bottom:12px}
-.brand{font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:.2em;color:var(--cyan);
-  text-shadow:0 0 10px var(--cyan-glow)}
-.brand .x404{color:#eafcff;text-shadow:0 0 10px var(--cyan-glow)}
-.brand-sub{font-size:10px;color:var(--text-dim);letter-spacing:.22em;margin-top:4px}
-.livepill{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.18em;color:var(--green)}
-
-/* topbar wallet gate */
-.topbar-right{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
-.wg-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end;
-  border:1px solid rgba(0,234,255,.35);background:rgba(2,10,18,.72);padding:7px 12px;
-  box-shadow:0 0 14px rgba(0,234,255,.14), inset 0 0 18px rgba(0,234,255,.05)}
-.wg-title{font-size:10px;letter-spacing:.2em;color:var(--cyan);text-shadow:0 0 8px var(--cyan-glow)}
-.wg-addr{font-size:10px;letter-spacing:.12em;color:var(--text-dim)}
-.wg-access{font-size:10px;letter-spacing:.12em;color:var(--text-dim)}
-.wg-btn{cursor:pointer;background:transparent;border:1px solid rgba(0,234,255,.55);color:var(--cyan);
-  font-family:inherit;font-size:10px;letter-spacing:.16em;padding:5px 12px;
-  text-shadow:0 0 8px var(--cyan-glow);transition:background .15s}
-.wg-btn:hover{background:rgba(0,234,255,.12)}
-@media (max-width:960px){
-  .topbar{justify-content:center;text-align:center}
-  .topbar-right{align-items:center}
-  .wg-bar{justify-content:center}
-}
-.led{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 8px var(--green);animation:blink 1.6s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-
-/* ===== tab bar (pages) ===== */
-.tabbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
-  border-bottom:1px solid rgba(0,229,255,.25);padding-bottom:12px}
-.tab{display:inline-flex;align-items:center;gap:8px;text-decoration:none;cursor:pointer;
-  font-size:10.5px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;
-  border:1px solid rgba(0,229,255,.25);background:rgba(4,18,28,.5);
-  padding:9px 16px;white-space:nowrap;
-  clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%,0 8px);
-  transition:color .2s ease,box-shadow .2s ease,border-color .2s ease}
-.tab .led2{width:5px;height:5px;background:currentColor;border-radius:50%}
-.tab:hover{color:var(--cyan);box-shadow:0 0 14px rgba(0,229,255,.15)}
-.tab.active{color:var(--green);border-color:rgba(0,255,200,.45);
-  box-shadow:0 0 16px rgba(0,255,200,.12),inset 0 0 12px rgba(0,255,200,.05)}
-.tab .ext{font-size:8px;color:var(--text-dim)}
-
-/* ===== panels ===== */
-.hud-panel{position:relative;background:var(--bg-panel);border:1px solid var(--panel-border);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:12px 14px 14px;
-  clip-path:polygon(12px 0,calc(100% - 12px) 0,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0 calc(100% - 12px),0 12px);
-  box-shadow:0 0 20px rgba(0,229,255,.08),inset 0 0 30px rgba(0,229,255,.03);
-  animation:panelPulse 4s ease-in-out infinite}
-@keyframes panelPulse{0%,100%{box-shadow:0 0 16px rgba(0,229,255,.06),inset 0 0 24px rgba(0,229,255,.02)}50%{box-shadow:0 0 28px rgba(0,229,255,.14),inset 0 0 32px rgba(0,229,255,.05)}}
-.hud-panel::before,.hud-panel::after{content:'';position:absolute;width:10px;height:10px;border:1px solid var(--cyan);opacity:.8;pointer-events:none}
-.hud-panel::before{top:3px;left:3px;border-right:none;border-bottom:none}
-.hud-panel::after{bottom:3px;right:3px;border-left:none;border-top:none}
-.hud-panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(0,229,255,.2)}
-.hud-panel-title{font-family:var(--font-display);font-size:11px;letter-spacing:.16em;color:var(--cyan);text-shadow:0 0 8px var(--cyan-glow)}
-.hud-panel-ticks{font-size:9px;color:var(--text-dim);letter-spacing:2px}
+/* ===== primary nav ===== */
+.nav{display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:12px 0;margin-bottom:30px}
+.nav a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);padding:9px 18px;text-decoration:none;transition:.15s}
+.nav a:hover{color:var(--green);border-color:var(--green-dim)}
+.nav a.active{color:var(--green);border-color:var(--green-dim);box-shadow:0 0 10px rgba(61,255,122,.15)}
 
 /* ===== hero ===== */
-#main-view{display:flex;flex-direction:column;min-height:calc(100svh - 132px)}
-.stage{flex:1 1 auto;min-height:34svh;pointer-events:none}
-.hero{margin-top:auto;text-align:center;padding:10px 10px 2px}
-.hero h1{font-family:var(--font-display);font-weight:900;font-size:clamp(2.2rem,7vw,4.4rem);letter-spacing:.14em;color:#fff;
-  text-shadow:0 0 24px var(--cyan-glow),0 0 60px rgba(0,229,255,.25)}
-.hero h1 .x404{color:var(--cyan);text-shadow:0 0 24px var(--cyan-glow)}
-.hero .sub{margin-top:12px;font-size:13px;letter-spacing:.3em;color:var(--cyan);text-transform:uppercase}
-.hero .tag{margin-top:14px;color:var(--text-dim);font-size:12px;letter-spacing:.08em;max-width:560px;margin-left:auto;margin-right:auto}
+.hero{display:flex;align-items:center;gap:30px;flex-wrap:wrap;margin-bottom:50px}
+.hero-text{flex:1 1 340px;min-width:280px}
+.hero-text h2{font-family:var(--font-head);font-size:28px;color:#fff;margin-bottom:10px}
+.hero-text p{font-size:13.5px;line-height:1.7;color:var(--text-dim);margin-bottom:14px}
+.hero-text a.more{font-weight:bold;color:var(--green);font-size:13px}
+.hero-img{flex:1 1 280px;min-width:220px;text-align:center}
+.hero-img img{max-width:280px;width:100%;filter:drop-shadow(0 0 24px var(--green-glow))}
 
-/* ===== stat readouts ===== */
-.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:22px}
-.stat{background:var(--bg-panel);border:1px solid rgba(0,229,255,.35);padding:12px 10px;text-align:center;
-  clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%,0 8px)}
-.stat .num{font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--cyan);text-shadow:0 0 12px var(--cyan-glow)}
-.stat .lbl{font-size:9px;color:var(--text-dim);letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
+/* ===== three-col ===== */
+.threecol{display:flex;gap:0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:34px 0;margin-bottom:50px}
+.col{flex:1;padding:0 26px;position:relative}
+.col:not(:first-child){border-left:1px solid var(--border)}
+.col-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.col-head img{width:34px;height:34px;filter:drop-shadow(0 0 6px var(--green-glow))}
+.col-head h3{font-size:14px;letter-spacing:.05em;color:var(--green);text-transform:uppercase}
+.col p{font-size:12.5px;line-height:1.7;color:var(--text-dim)}
 
-/* ===== layout grid ===== */
-.grid3{display:grid;grid-template-columns:minmax(200px,240px) 1fr minmax(200px,240px);gap:14px;align-items:start}
-.col{display:flex;flex-direction:column;gap:14px}
+/* ===== two-col: highlights + services ===== */
+.twocol{display:flex;gap:40px;flex-wrap:wrap;margin-bottom:50px}
+.twocol .block{flex:1;min-width:260px}
+.twocol h3{font-family:var(--font-head);font-size:17px;color:#fff;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.hl-item{display:flex;gap:10px;margin-bottom:16px}
+.hl-item img{width:22px;height:22px;flex-shrink:0;margin-top:2px}
+.hl-item p{font-size:12.5px;color:var(--text-dim);line-height:1.6}
+.hl-item strong{color:var(--text);display:block;font-size:13px;margin-bottom:2px}
+.svc-list{list-style:none;columns:2;column-gap:24px;font-size:12.5px}
+.svc-list li{margin-bottom:11px;border-bottom:1px dotted rgba(61,255,122,.15);padding-bottom:8px}
 
-/* event log */
-.loglist{list-style:none;font-size:10.5px;line-height:1.9;color:var(--text-dim);max-height:170px;overflow:hidden}
-.loglist .id{color:var(--cyan-dim)}
-.loglist .ok{color:var(--green)}
-.loglist .act{color:var(--text)}
+/* ===== content sections ===== */
+.section{padding:26px 0;border-top:1px solid var(--border)}
+.section h2{font-family:var(--font-head);font-size:19px;color:#fff;margin-bottom:12px}
+.section p{font-size:13px;line-height:1.75;color:var(--text-dim);max-width:760px}
+.contact-grid{display:flex;gap:30px;flex-wrap:wrap;margin-top:14px}
+.contact-grid div{font-size:12.5px;color:var(--text-dim)}
+.contact-grid strong{color:var(--green);display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
 
-/* checklist */
-.checklist{list-style:none;font-size:11px;line-height:2.1}
-.checklist .tick{color:var(--green);margin-right:8px}
-.checklist .pend{color:var(--text-dim);margin-right:8px}
-.checklist .hx{color:var(--cyan-dim);margin-left:8px;font-size:9px}
+/* ===== footer ===== */
+.footer{margin-top:40px;border-top:1px solid var(--border);padding-top:18px}
+.footer-nav{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;font-size:11px;margin-bottom:12px}
+.footer-nav a{color:var(--text-dim)}
+.footer-nav a:hover{color:var(--green)}
+.copy{text-align:center;font-size:10.5px;color:var(--text-dim);letter-spacing:.03em}
 
-/* platform cards */
-.platforms{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:8px}
-.pcard{display:block;text-decoration:none;color:var(--text);transition:transform .25s ease,box-shadow .25s ease}
-.pcard:hover{transform:translateY(-3px)}
-.pcard .hud-panel-title{color:var(--green);text-shadow:0 0 8px rgba(0,255,200,.4)}
-.pcard p{font-size:11px;color:var(--text-dim);line-height:1.6;margin-bottom:10px}
-.pcard .go{font-size:10px;letter-spacing:.14em;color:var(--cyan)}
-.pcard:hover .go{color:var(--green)}
-
-/* node/data panels */
-.kv{font-size:11px;line-height:2}
-.kv b{color:var(--text);font-weight:normal;display:inline-block;min-width:92px}
-.kv .dim{color:var(--text-dim)}
-.kv .val{color:var(--cyan)}
-.kv .ok{color:var(--green)}
-.mono-fn{font-size:11px;color:var(--text-dim);line-height:1.9}
-.mono-fn .fn{color:var(--green)}
-
-/* assets section */
-#assets-sec{display:none;margin-top:6px}
-#assets-sec.show{display:flex;flex-direction:column;gap:14px}
-.asset-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.asset-num{font-family:var(--font-display);font-size:1.15rem;color:var(--green);text-shadow:0 0 12px rgba(0,255,200,.35)}
-.asset-row{display:flex;justify-content:space-between;font-size:10.5px;line-height:2;color:var(--text-dim)}
-.asset-row .k{color:var(--text)}
-.asset-row .v{color:var(--cyan)}
-
-/* wallet rows */
-.wrow{display:flex;justify-content:space-between;font-size:10px;line-height:2;color:var(--text-dim)}
-.wrow .addr{color:var(--text)}
-.wrow .pct{color:var(--cyan)}
-
-/* contact */
-.contactbar{margin-top:8px;text-align:center;font-size:11px;color:var(--text-dim);letter-spacing:.1em;line-height:2}
-.contactbar b{color:var(--cyan);font-weight:normal}
-footer{margin-top:auto;text-align:center;font-size:9px;color:#2e4a58;letter-spacing:.2em;padding-top:20px}
-
-@media (max-width:960px){
-  .grid3{grid-template-columns:1fr}
-  .col.right{order:-1}
-  .loglist{max-height:110px}
-  .tabbar{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin}
-  .stage{min-height:26svh}
-  #main-view{min-height:calc(100svh - 120px)}
-}
-@media (prefers-reduced-motion:reduce){
-  #bgvid{display:none}
-  .hud-panel{animation:none}
+@media(max-width:760px){
+  .threecol{flex-direction:column}
+  .col{border-left:none!important;padding:14px 0;border-top:1px solid var(--border)}
+  .col:first-child{border-top:none;padding-top:0}
+  .svc-list{columns:1}
 }
 </style>
 </head>
 <body>
-<video id="bgvid" autoplay muted loop playsinline preload="auto" src="bg_network.mp4"></video>
-<div class="bgveil"></div>
-<div class="scanlines"></div>
-
 <div class="wrap">
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div>
-      <div class="brand">BIGFOOT<span class="x404">404</span> LLC // COMPANY NETWORK</div>
-      <div class="brand-sub">REAL ESTATE WHOLESALE · BIG NETWORK · NEW YORK CITY</div>
-    </div>
-    <div class="topbar-right">
-      <div class="wg-bar" id="wallet-gate">
-        <span class="wg-title">WALLET GATE // HOLDERS ONLY</span>
-        <span class="wg-addr" id="wg-addr">NOT CONNECTED</span>
-        <span class="wg-access" id="wg-access">LOCKED ◈</span>
-        <button id="wg-btn" class="wg-btn">CONNECT WALLET</button>
+  <div class="brandrow">
+    <div class="brand">
+      <img src="assets/leaf-icon.png" alt="Bigfoot404"/>
+      <div class="brand-text">
+        <h1>BIGFOOT404 LLC</h1>
+        <p>REAL ESTATE · BLOCKCHAIN · BIGFOOT COUNTRY</p>
       </div>
-      <div class="livepill"><span class="led"></span> SYSTEMS NOMINAL · PIPELINE LIVE</div>
+    </div>
+    <div class="netpills">
+      <a class="netpill" href="https://node.bigfoot404.biz" target="_blank" rel="noopener">Node</a>
+      <a class="netpill" href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Wallet</a>
+      <a class="netpill" href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan</a>
+      <a class="netpill" href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">CRM</a>
     </div>
   </div>
 
+  <div class="nav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a class="active" href="#partners">Partners</a>
+    <a href="#support">Support</a>
+    <a href="#contact">Contact</a>
+  </div>
 
-  <!-- MAIN VIEW -->
-  <div id="main-view">
-
-  <div class="stage" aria-hidden="true"></div>
-
-  <!-- HERO -->
   <div class="hero">
-    <h1>BIGFOOT<span class="x404">404</span></h1>
-    <div class="sub">Legendary Deals · Found In The Mist</div>
-    <p class="tag">Off-market acquisitions, institutional cash-buyer networks, and on-chain infrastructure — one company, six operating surfaces.</p>
-    <div class="statrow">
-      <div class="stat"><div class="num">60%</div><div class="lbl">cash offer to seller</div></div>
-      <div class="stat"><div class="num">32%</div><div class="lbl">buyer cushion</div></div>
-      <div class="stat"><div class="num">50+</div><div class="lbl">institutional buyers</div></div>
-      <div class="stat"><div class="num">2500+</div><div class="lbl">properties sourced</div></div>
+    <div class="hero-text">
+      <h2>Welcome to Bigfoot404 LLC</h2>
+      <p>We find off-market properties nationwide, make sellers a fast 60% cash offer, and assign the contract to our network of institutional and regional cash buyers. Above ground, that's the business. Underneath it, we run the BIG Network — Bigfoot404's own Solana-based blockchain powering our corporate treasury and digital assets.</p>
+      <a class="more" href="#about">Learn more about us &raquo;</a>
+    </div>
+    <div class="hero-img">
+      <img src="assets/hero-plant.png" alt="Growth"/>
     </div>
   </div>
 
-  </div><!-- /main-view -->
+  <div class="threecol">
+    <div class="col">
+      <div class="col-head"><img src="assets/icon-offers.png" alt=""/><h3>Our Offers</h3></div>
+      <p>We contact owner-listed (FSBO) properties directly and extend a fair, fast 60% cash offer — no listing fees, no repairs, no waiting on financing. Sellers close on their timeline, as-is.</p>
+    </div>
+    <div class="col">
+      <div class="col-head"><img src="assets/icon-network.png" alt=""/><h3>Our Network</h3></div>
+      <p>Every accepted contract is assigned to a vetted cash buyer from our nationwide network — institutional funds, regional investors, and iBuyers — closing deals across every major U.S. market.</p>
+    </div>
+    <div class="col">
+      <div class="col-head"><img src="assets/icon-growth.png" alt=""/><h3>Our Growth</h3></div>
+      <p>Beyond real estate, Bigfoot404 LLC operates the BIG Network — a company-owned blockchain treasury, wallet, and explorer built to grow alongside the wholesaling business.</p>
+    </div>
+  </div>
 
-    <!-- TAB BAR — PAGES -->
-  <nav class="tabbar" id="tabbar">
-    <a class="tab active" id="tab-main" href="#" onclick="showMain(event)">MAIN</a>
-    <a class="tab" href="https://big-crm.base44.app/leads" target="_blank" rel="noopener">CRM <span class="ext">▸ crm</span></a>
-    <a class="tab" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net/scan" target="_blank" rel="noopener">BIGSCAN <span class="ext">▸ scan</span></a>
-    <a class="tab" href="wallet.html" target="_blank" rel="noopener">BIG WALLET <span class="ext">▸ wallet</span></a>
-    <a class="tab" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net/node-setup" target="_blank" rel="noopener">RUN-A-NODE <span class="ext">▸ nodes</span></a>
-    <a class="tab" href="https://shop.bigfoot404.com" target="_blank" rel="noopener">SHOP <span class="ext">▸ shop</span></a>
-    <a class="tab" href="https://swap.bigfoot404.com/" target="_blank" rel="noopener">SWAP <span class="ext">▸ swap</span></a>
-    <a class="tab" id="tab-assets" href="#" onclick="showAssets(event)">ASSETS</a>
-  </nav>
-
-  <div id="main-panels">
-  <!-- MAIN GRID -->
-  <div class="grid3">
-
-    <!-- LEFT COLUMN -->
-    <div class="col left">
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">STATUS</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="kv">
-          <div><b>OPERATION</b><span class="ok">ACTIVE ✓</span></div>
-          <div><b>MODE</b><span class="val">WHOLESALE</span></div>
-          <div><b>LEADS</b><span class="val">1800+</span></div>
-          <div><b>DEALS LIVE</b><span class="val">23</span></div>
-          <div><b>THREATS</b><span class="ok">NONE DETECTED</span></div>
-        </div>
+  <div class="twocol">
+    <div class="block">
+      <h3>Company Highlights</h3>
+      <div class="hl-item">
+        <img src="assets/icon-offers.png" alt=""/>
+        <p><strong>Nationwide pipeline</strong>Thousands of tracked leads and a property pipeline spanning every major U.S. market.</p>
       </div>
-
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">SECURE CORE // DEAL LOG</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <ul class="loglist" id="deallog"></ul>
+      <div class="hl-item">
+        <img src="assets/icon-network.png" alt=""/>
+        <p><strong>50+ cash buyers</strong>A curated buyer network covering institutional funds and regional investors across CA, TX, NY, FL, CO, and beyond.</p>
       </div>
-
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">VALIDATION CHECKLIST</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <ul class="checklist">
-          <li><span class="tick">✓</span>OFF-MARKET SOURCING<span class="hx">0xA7F3_LEAD_SCAN</span></li>
-          <li><span class="tick">✓</span>OWNER OUTREACH ARMED<span class="hx">0xB21C_OFFER_ENGINE</span></li>
-          <li><span class="tick">✓</span>PSA + AOC CONTRACTS<span class="hx">0xC9E0_ASSIGNMENT</span></li>
-          <li><span class="pend">○</span>CASH BUYER MATCH<span class="hx">0xD44A_BUYER_ROUTING</span></li>
-          <li><span class="pend">○</span>WIRE AT CLOSING<span class="hx">0xF03B_SETTLEMENT</span></li>
-        </ul>
+      <div class="hl-item">
+        <img src="assets/icon-growth.png" alt=""/>
+        <p><strong>BIG Network</strong>A company-owned Solana-based chain — corporate treasury, wallet, node, and explorer, all under one roof.</p>
       </div>
     </div>
-
-    <!-- CENTER COLUMN -->
-    <div class="col center">
-      <div class="hud-panel" style="padding:16px">
-        <div class="hud-panel-header"><span class="hud-panel-title">OPERATING PLATFORMS // BIGFOOT404</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="platforms">
-          <a class="pcard" href="https://big-crm.base44.app/leads" target="_blank" rel="noopener">
-            <div class="hud-panel">
-              <div class="hud-panel-title">WHOLESALE CRM</div>
-              <p>Nationwide FSBO acquisition pipeline — owner outreach, 60% cash offers, contracts, assignments.</p>
-              <span class="go">crm.bigfoot404.biz ▸</span>
-            </div>
-          </a>
-          <a class="pcard" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net/scan" target="_blank" rel="noopener">
-            <div class="hud-panel">
-              <div class="hud-panel-title">BIGSCAN EXPLORER</div>
-              <p>Live BIG Chain explorer — transactions, wallets, and network health at a glance.</p>
-              <span class="go">scan.bigfoot404.biz ▸</span>
-            </div>
-          </a>
-          <a class="pcard" href="wallet.html" target="_blank" rel="noopener">
-            <div class="hud-panel">
-              <div class="hud-panel-title">BIG WALLET</div>
-              <p>Web wallet for the BIG Network — balances, transfers, and in-game economy.</p>
-              <span class="go">wallet.bigfoot404.biz ▸</span>
-            </div>
-          </a>
-          <a class="pcard" href="https://8f2dvht9slxsi3-9090.proxy.runpod.net/node-setup" target="_blank" rel="noopener">
-            <div class="hud-panel">
-              <div class="hud-panel-title">RUN-A-NODE</div>
-              <p>Spin up your own BIG Network validator in one command — join the network.</p>
-              <span class="go">nodes.bigfoot404.biz ▸</span>
-            </div>
-          </a>
-          <a class="pcard" href="https://shop.bigfoot404.com" target="_blank" rel="noopener">
-            <div class="hud-panel">
-              <div class="hud-panel-title">BIGFOOT404 SHOP</div>
-              <p>Official company store — brand gear, merch, and product drops.</p>
-              <span class="go">shop.bigfoot404.com ▸</span>
-            </div>
-          </a>
-          <a class="pcard" href="https://swap.bigfoot404.com/" target="_blank" rel="noopener">
-            <div class="hud-panel">
-              <div class="hud-panel-title">BIG SWAP</div>
-              <p>On-chain token swap — trade BIG and paired assets on the network.</p>
-              <span class="go">swap.bigfoot404.com ▸</span>
-            </div>
-          </a>
-        </div>
-      </div>
-
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">DEAL ECONOMICS // STANDARD MATH</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="mono-fn">
-          <div><span class="fn">seller_payout()</span> 60% of market value — cash, AS-IS, 30-day close</div>
-          <div><span class="fn">buyer_cushion()</span> 32% spread for the assignee — Fortune 500 cash buyers</div>
-          <div><span class="fn">company_profit()</span> 8% assignment fee — private, never disclosed to seller</div>
-        </div>
-      </div>
+    <div class="block">
+      <h3>Our Services</h3>
+      <ul class="svc-list">
+        <li><a href="#services">Real Estate Wholesaling</a></li>
+        <li><a href="#partners">Cash Buyer Network</a></li>
+        <li><a href="#services">Purchase &amp; Assignment Contracts</a></li>
+        <li><a href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">Wholesale CRM</a></li>
+        <li><a href="https://node.bigfoot404.biz" target="_blank" rel="noopener">BIG Network Node</a></li>
+        <li><a href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">BIG Wallet</a></li>
+        <li><a href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan Explorer</a></li>
+        <li><a href="#support">Investor Support</a></li>
+      </ul>
     </div>
+  </div>
 
-    <!-- RIGHT COLUMN -->
-    <div class="col right">
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">BIG NETWORK // NODE</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="kv">
-          <div><b>NODE ID</b><span class="val">BIGFOOT404-01</span></div>
-          <div><b>ROLE</b><span class="val">NETWORK ARCHITECT</span></div>
-          <div><b>INTEGRITY</b><span class="ok">98.3%</span></div>
-          <div><b>RPC</b><span class="val">LIVE</span></div>
-        </div>
-      </div>
+  <div class="section" id="about">
+    <h2>About Bigfoot404 LLC</h2>
+    <p>Bigfoot404 LLC is a New York-based real estate wholesaling company. We identify owner-listed properties, make fast cash offers, and connect motivated sellers with a nationwide network of cash buyers — turning slow, uncertain sales into simple, as-is closings. Alongside the real estate business, we built and operate the BIG Network: our own company blockchain, wallet, and explorer, run with the same standards we hold our real estate operations to.</p>
+  </div>
 
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">DATA STREAM</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="kv">
-          <div><b>TPS</b><span class="val" id="dtps">—</span></div>
-          <div><b>LATENCY</b><span class="val" id="dlat">—</span></div>
-          <div><b>COMPUTE</b><span class="val" id="dcpu">—</span></div>
-          <div><b>MSG/S</b><span class="val" id="dmsg">—</span></div>
-        </div>
-      </div>
+  <div class="section" id="services">
+    <h2>Services</h2>
+    <p>Real Estate Wholesaling &middot; Cash Offers on Off-Market Properties &middot; Purchase &amp; Sale Agreements with Assignment Rights &middot; Assignment Contracts for Cash Buyers &middot; Wholesale CRM &amp; Deal Pipeline &middot; BIG Network Node Hosting &middot; BIG Wallet &middot; BigScan Chain Explorer.</p>
+  </div>
 
-      <div class="hud-panel">
-        <div class="hud-panel-header"><span class="hud-panel-title">WALLET TRACKER</span><span class="hud-panel-ticks">▢▢▢</span></div>
-        <div class="wrow"><span class="addr">VAULT · cold</span><span class="pct">82.4%</span></div>
-        <div class="wrow"><span class="addr">OPS · warm</span><span class="pct">11.1%</span></div>
-        <div class="wrow"><span class="addr">FAUCET</span><span class="pct">4.2%</span></div>
-        <div class="wrow"><span class="addr">NODE REWARDS</span><span class="pct">2.3%</span></div>
-      
+  <div class="section" id="partners">
+    <h2>Partners</h2>
+    <p>Our cash buyer network spans institutional real estate funds, regional investment groups, and iBuyers across every major U.S. market — matched deal-by-deal to move fast on the properties we bring to contract.</p>
+  </div>
+
+  <div class="section" id="support">
+    <h2>Support</h2>
+    <p>Have a property to sell, a deal to review, or a question about the BIG Network? Reach our team directly — we respond fast.</p>
+    <div class="contact-grid">
+      <div><strong>Email</strong><a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a></div>
+      <div><strong>Phone</strong><a href="tel:18004044187">1-800-404-4187</a></div>
+      <div><strong>Address</strong>800 3rd Ave, New York, NY 10022</div>
+    </div>
+  </div>
+
+  <div class="section" id="contact">
+    <h2>Contact</h2>
+    <p>Sellers, buyers, and partners — get in touch any time at <a href="mailto:Info@bigfoot404.biz">Info@bigfoot404.biz</a> or <a href="tel:18004044187">1-800-404-4187</a>. For BIG Network access, use the Node, Wallet, and BigScan links above.</p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-nav">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#partners">Partners</a>
+      <a href="#support">Support</a>
+      <a href="#contact">Contact</a>
+      <a href="https://node.bigfoot404.biz" target="_blank" rel="noopener">Node</a>
+      <a href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Wallet</a>
+      <a href="https://bigscan.bigfoot404.biz" target="_blank" rel="noopener">BigScan</a>
+      <a href="https://crm.bigfoot404.biz" target="_blank" rel="noopener">CRM</a>
+    </div>
+    <div class="copy">Bigfoot404 LLC &copy; 2026 &nbsp;|&nbsp; 800 3rd Ave, New York, NY 10022 &nbsp;|&nbsp; 1-800-404-4187</div>
+  </div>
+
 </div>
-    </div>
-  </div>
-  </div><!-- /main-panels -->
-
-  <!-- ASSETS VIEW (tab) -->
-  <div id="assets-sec">
-    <div class="hud-panel">
-      <div class="hud-panel-header"><span class="hud-panel-title">COMPANY ASSETS // REAL ESTATE</span><span class="hud-panel-ticks">▢▢▢</span></div>
-      <div class="asset-grid">
-        <div class="hud-panel">
-          <div class="asset-num">2,500+</div>
-          <div class="stat-lbl" style="font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-top:4px">PROPERTIES SOURCED</div>
-          <div class="asset-row" style="margin-top:10px"><span class="k">Pipeline valuation</span><span class="v">$932M+</span></div>
-          <div class="asset-row"><span class="k">Active leads</span><span class="v">1,800+</span></div>
-          <div class="asset-row"><span class="k">Deals in motion</span><span class="v">23</span></div>
-        </div>
-        <div class="hud-panel">
-          <div class="asset-num">50+</div>
-          <div class="stat-lbl" style="font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-top:4px">INSTITUTIONAL BUYERS</div>
-          <div class="asset-row" style="margin-top:10px"><span class="k">Markets covered</span><span class="v">Nationwide</span></div>
-          <div class="asset-row"><span class="k">Anchor buyers</span><span class="v">Fortune 500</span></div>
-          <div class="asset-row"><span class="k">Buyer cushion</span><span class="v">32%</span></div>
-        </div>
-        <div class="hud-panel">
-          <div class="asset-num">CRM</div>
-          <div class="stat-lbl" style="font-size:9px;color:var(--text-dim);letter-spacing:.18em;margin-top:4px">WHOLESALE ENGINE</div>
-          <div class="asset-row" style="margin-top:10px"><span class="k">Lead scraper</span><span class="v">Daily · 50 states</span></div>
-          <div class="asset-row"><span class="k">Contract system</span><span class="v">PSA + AOC</span></div>
-          <div class="asset-row"><span class="k">Outreach</span><span class="v">Auto · email + phone</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hud-panel">
-      <div class="hud-panel-header"><span class="hud-panel-title">COMPANY ASSETS // BIG NETWORK</span><span class="hud-panel-ticks">▢▢▢</span></div>
-      <div class="asset-grid">
-        <div class="hud-panel">
-          <div class="asset-num">BIG CHAIN</div>
-          <div class="asset-row" style="margin-top:10px"><span class="k">Seed node</span><span class="v">RUNPOD · LIVE</span></div>
-          <div class="asset-row"><span class="k">Explorer</span><span class="v">BIGSCAN</span></div>
-          <div class="asset-row"><span class="k">Faucet + wallet</span><span class="v">ONLINE</span></div>
-        </div>
-        <div class="hud-panel">
-          <div class="asset-num">bigfoot404.sol</div>
-          <div class="asset-row" style="margin-top:10px"><span class="k">SNS domain</span><span class="v">VAULTED ✓</span></div>
-          <div class="asset-row"><span class="k">Registry</span><span class="v">Solana Name Service</span></div>
-          <div class="asset-row"><span class="k">Control</span><span class="v">COMPANY WALLET</span></div>
-        </div>
-        <div class="hud-panel">
-          <div class="asset-num">BRAND</div>
-          <div class="asset-row" style="margin-top:10px"><span class="k">Domain</span><span class="v">bigfoot404.biz</span></div>
-          <div class="asset-row"><span class="k">Identity</span><span class="v">NAVY · GOLD · STEEL</span></div>
-          <div class="asset-row"><span class="k">Pitch deck</span><span class="v">12-PAGE PDF</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="contactbar hud-panel">
-      <b>BIGFOOT404 LLC</b> · 800 3RD AVE, NEW YORK, NY 10022 · 1-800-404-4187 · <b>INFO@BIGFOOT404.BIZ</b>
-    </div>
-  </div>
-
-  <!-- CONTACT -->
-  <div class="contactbar">
-    <b>BIGFOOT404 LLC</b> · 800 3RD AVE, NEW YORK, NY 10022 · 1-800-404-4187 · <b>INFO@BIGFOOT404.BIZ</b>
-  </div>
-
-<footer>© 2026 BIGFOOT404 LLC · NEW YORK, NY<span style="opacity:.45"> · BUILD 0915-B</span></footer>
-</div>
-
-<script>
-function showAssets(e){e.preventDefault();
-  document.getElementById('main-view').style.display='none';
-  document.getElementById('main-panels').style.display='none';
-  document.getElementById('assets-sec').classList.add('show');
-  document.getElementById('tab-main').classList.remove('active');
-  document.getElementById('tab-assets').classList.add('active');
-  window.scrollTo({top:0});}
-function showMain(e){e.preventDefault();
-  document.getElementById('assets-sec').classList.remove('show');
-  document.getElementById('main-view').style.display='flex';
-  document.getElementById('main-panels').style.display='block';
-  document.getElementById('tab-assets').classList.remove('active');
-  document.getElementById('tab-main').classList.add('active');
-  window.scrollTo({top:0});}
-
-/* deal log stream */
-const leads=["LEAD#1277","LEAD#1278","LEAD#1281","LEAD#1285","LEAD#1290","LEAD#1293","LEAD#1297"];
-const acts=["60% cash offer accepted","owner outreach sent","PSA generated","buyer matched","assignment routed","contract signed","inspection window opened","title contingency cleared"];
-const ids=["0x9E44AE173","0x9636B7E2D","0xDC69E509F","0x4A1C88B0E","0x7F3D21C9A","0xB8E44D012"];
-const log=document.getElementById('deallog');
-function hex(){return ids[Math.floor(Math.random()*ids.length)];}
-function addLog(){
-  const li=document.createElement('li');
-  const t=new Date().toLocaleTimeString('en-US',{hour12:false});
-  li.innerHTML=`<span class="ok">[${t}]</span> <span class="id">${hex()}</span> <span class="act">${leads[Math.floor(Math.random()*leads.length)]} ${acts[Math.floor(Math.random()*acts.length)]}</span>`;
-  log.insertBefore(li,log.firstChild);
-  if(log.children.length>9)log.removeChild(log.lastChild);
-}
-for(let i=0;i<6;i++)addLog();
-setInterval(addLog,3200);
-
-/* data stream jitter */
-function setD(id,v,j){document.getElementById(id).textContent=v+(Math.random()*j).toFixed(1);}
-setInterval(()=>{setD('dtps',2,4);setD('dlat',150,30);setD('dcpu',10,8);setD('dmsg',80,25);},2000);
-
-/* ===== WALLET GATE — Solana holder check ===== */
-const WG_COLL_ID = "CEYQLZWtF9sqMATXJGkM8UqP5JQjEcCaBBmmXtJkL3pF";
-const WG_RPC = "https://api.mainnet-beta.solana.com";
-const wgBtn = document.getElementById('wg-btn');
-const wgAddr = document.getElementById('wg-addr');
-const wgAccess = document.getElementById('wg-access');
-
-function wgProvider(){
-  const w = window;
-  if (w.phantom?.solana?.isPhantom) return w.phantom.solana;
-  if (w.solana?.isPhantom) return w.solana;
-  if (w.solflare?.isSolflare) return w.solflare;
-  if (w.backpack?.isBackpack) return w.backpack;
-  return null;
-}
-
-async function wgRpc(method, params){
-  try{
-    const r = await fetch(WG_RPC, {method:"POST", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({jsonrpc:"2.0", id:1, method, params}), signal: AbortSignal.timeout(15000)});
-    return await r.json();
-  }catch(e){ return {error: String(e)}; }
-}
-
-async function wgCountNft(owner){
-  let found = 0, page = 1;
-  while (page <= 5){
-    const j = await wgRpc("getAssetsByOwner", {ownerAddress: owner, page, limit: 1000});
-    const items = j?.result?.items;
-    if (!Array.isArray(items)) break;
-    for (const a of items){
-      if ((a.grouping || []).some(g => g.group_key === "collection" && g.group_value === WG_COLL_ID)) found++;
-    }
-    if (items.length < 1000) break;
-    page++;
-  }
-  return found;
-}
-
-async function wgCountFungible(owner){
-  const j = await wgRpc("getTokenAccountsByOwner", [owner, {mint: WG_COLL_ID}, {encoding: "jsonParsed"}]);
-  const vals = j?.result?.value;
-  if (!Array.isArray(vals)) return 0;
-  let amt = 0;
-  for (const v of vals){
-    const ui = v?.account?.data?.parsed?.info?.tokenAmount?.uiAmount;
-    if (ui && ui > 0) amt += ui;
-  }
-  return amt > 0 ? Math.max(1, Math.round(amt)) : 0;
-}
-
-wgBtn.addEventListener('click', async () => {
-  const p = wgProvider();
-  if (!p){
-    wgAddr.textContent = 'NO WALLET FOUND';
-    wgAccess.textContent = 'INSTALL PHANTOM ◈';
-    wgAccess.style.color = 'var(--danger)';
-    wgBtn.textContent = 'GET PHANTOM → phantom.app';
-    window.open('https://phantom.app', '_blank');
-    return;
-  }
-  wgBtn.textContent = 'CONNECTING…';
-  wgBtn.style.pointerEvents = 'none';
-  try{
-    const resp = await p.connect();
-    const pk = (resp?.publicKey || p.publicKey)?.toString?.();
-    if (!pk) throw new Error('no public key returned');
-    wgAddr.textContent = pk.slice(0,4) + '…' + pk.slice(-4);
-    wgAccess.textContent = 'CHECKING CHAIN…';
-    wgAccess.style.color = 'var(--text-dim)';
-    const [nft, fung] = await Promise.all([wgCountNft(pk), wgCountFungible(pk)]);
-    const held = nft + fung;
-    if (held > 0){
-      wgAccess.textContent = 'UNLOCKED ✓ ' + held + (nft > 0 ? ' NFT' : ' TOKEN') + (held>1?'S':'');
-      wgAccess.style.color = 'var(--green)';
-      wgAccess.style.textShadow = '0 0 8px rgba(0,255,200,.5)';
-      wgBtn.textContent = 'WALLET CONNECTED ✓';
-    } else {
-      wgAccess.textContent = 'LOCKED ◈ 0 COLLECTION ASSETS';
-      wgAccess.style.color = 'var(--danger)';
-      wgBtn.textContent = 'NOT A HOLDER — CHECK ANOTHER';
-    }
-  }catch(err){
-    wgAddr.textContent = 'NOT CONNECTED';
-    wgAccess.textContent = 'CONNECTION CANCELLED ◈';
-    wgAccess.style.color = 'var(--danger)';
-    wgBtn.textContent = 'CONNECT WALLET';
-  }
-  wgBtn.style.pointerEvents = '';
-});
-</script>
 </body>
 </html>
