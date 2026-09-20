@@ -143,6 +143,19 @@ a:hover{text-decoration:underline}
   .col{border-left:none!important;padding:14px 0;border-top:1px solid var(--border)}
   .col:first-child{border-top:none}
 }
+
+/* ---- SOLANA NFT TOKEN GATE ---- */
+.gated { position: relative; }
+.gated.is-locked { filter: blur(6px); pointer-events: none; user-select: none; }
+.gate-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(10,16,10,.55); z-index: 40; pointer-events: auto; filter: none; }
+.gate-box { text-align: center; padding: 28px 32px; border-radius: 14px; background: #101a10; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 12px 40px rgba(0,0,0,.5); max-width: 340px; }
+.gate-box .gate-icon { font-size: 30px; margin-bottom: 8px; }
+.gate-box h4 { margin: 6px 0 6px; }
+.gate-box p { font-size: 13px; opacity: .8; margin: 0 0 14px; }
+.gbtn { cursor: pointer; border: 0; border-radius: 8px; padding: 10px 22px; font-weight: 600; color: #08130a; background: linear-gradient(90deg,#7ef29b,#4ad46f); }
+.gate-status.ok { color: #7ef29b; }
+.gate-status { font-size: 13px; opacity: .85; }
+.wbtn-ghost { margin-left: 10px; }
 </style>
 </head>
 <body>
@@ -193,20 +206,19 @@ a:hover{text-decoration:underline}
   </div>
 
   <div class="panel" id="wallet">
-    <div class="panel-head"><h3>Wallet Connect</h3></div>
-    <p class="panel-sub">Connect your BIG wallet to check holder status, swap tokens for NFTs, and view your RWA access level. New here? Create a wallet in the BIG Wallet app first.</p>
+    <div class="panel-head"><h3>Wallet Connect &mdash; NFT Holder Verification</h3><span class="gate-status wbtn-ghost"></span></div>
+    <p class="panel-sub">Connect your Solana wallet (Phantom / Solflare) to verify you hold a Bigfoot 404 NFT. Verified holders unlock the token-gated sections: token details, the NFT collection, and the shop.</p>
     <div class="wallet-grid">
       <div class="wcard">
-        <h4>Connect / Create Wallet</h4>
-        <p>The BIG Wallet holds your $BIG tokens and NFTs on the BIG Network. Create one in seconds, then check your holder status here.</p>
-        <a class="wbtn" href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Open BIG Wallet ▸</a>
+        <h4>Connect Solana Wallet</h4>
+        <p>Phantom or Solflare. We scan your wallet for Bigfoot 404 NFTs on-chain — read-only, no signature, no transaction.</p>
+        <button class="wbtn" id="gateConnectBtn" onclick="bigfootGate.connect()">Connect Wallet</button>
+        <div class="holdout" id="holderOut"></div>
       </div>
       <div class="wcard">
-        <h4>Check Holder Status</h4>
-        <p>Already holding? Paste your BIG address to verify your $BIG balance and NFT holder status.</p>
-        <input class="winput" id="holderAddr" placeholder="Your BIG wallet address"/>
-        <button class="wbtn" id="btnCheckHolder" onclick="checkHolder()">Check Status</button>
-        <div class="holdout" id="holderOut"></div>
+        <h4>Holder Benefits</h4>
+        <p>Verified holders unlock the gated sections: $BIG token details, the full NFT collection, and the shop. NFTs also carry RWA access levels on the BIG Network.</p>
+        <a class="wbtn secondary" href="https://wallet.bigfoot404.biz" target="_blank" rel="noopener">Open BIG Wallet ▸</a>
       </div>
       <div class="wcard">
         <h4>Swap Tokens → NFT</h4>
@@ -221,7 +233,7 @@ a:hover{text-decoration:underline}
   </div>
 
   <div class="trio">
-    <div class="tcard" id="token">
+    <div class="tcard gated" id="token">
       <span class="tag">Token Details</span>
       <h4>$BIG Token</h4>
       <ul>
@@ -232,7 +244,7 @@ a:hover{text-decoration:underline}
         <li><b>Network:</b> BIG Network — Bigfoot404's own chain</li>
       </ul>
     </div>
-    <div class="tcard" id="nft">
+    <div class="tcard gated" id="nft">
       <span class="tag">NFT Collection</span>
       <h4>Bigfoot 404 NFTs</h4>
       <ul>
@@ -243,7 +255,7 @@ a:hover{text-decoration:underline}
         <li><b>Holders gain:</b> IRL jobs, events, partnership programs</li>
       </ul>
     </div>
-    <div class="tcard" id="shop">
+    <div class="tcard gated" id="shop">
       <span class="tag">Merch Shop</span>
       <h4>Bigfoot404 Shop</h4>
       <ul>
@@ -395,52 +407,8 @@ a:hover{text-decoration:underline}
 
 </div>
 
-<script>
-function fmtBig(n){
-  try{ return Number(n||0).toLocaleString(undefined,{maximumFractionDigits:2}); }
-  catch(e){ return String(n); }
-}
-async function checkHolder(){
-  var out = document.getElementById('holderOut');
-  var btn = document.getElementById('btnCheckHolder');
-  var addr = document.getElementById('holderAddr').value.trim();
-  out.className = 'holdout show';
-  if(!addr){
-    out.innerHTML = '<span class="warn">Enter your BIG wallet address first.</span>';
-    return;
-  }
-  btn.disabled = true; btn.textContent = 'Checking…';
-  var GW = 'https://8f2dvht9slxsi3-9090.proxy.runpod.net';
-  try{
-    var ctrl = new AbortController();
-    var t = setTimeout(function(){ ctrl.abort(); }, 12000);
-    var r = await fetch(GW + '/wallet/balance?address=' + encodeURIComponent(addr), {signal: ctrl.signal});
-    clearTimeout(t);
-    var d = await r.json();
-    if(d && d.ok === false){
-      out.innerHTML = '<span class="warn">' + (d.error || 'Address not found on the BIG chain.') + '</span>';
-    } else if(d){
-      var bal = d.balance !== undefined ? d.balance : (d.amount !== undefined ? d.amount : 0);
-      var holder = Number(bal) > 0;
-      var nft = holder && Number(bal) >= 666666 ? Math.floor(Number(bal)/666666) : 0;
-      out.innerHTML =
-        '<div class="big">' + (holder ? '✓ Confirmed $BIG Holder' : 'No $BIG detected yet') + '</div>' +
-        '<div>$BIG balance: <b>' + fmtBig(bal) + '</b></div>' +
-        '<div>NFT eligibility: <b>' + (nft > 0 ? nft + ' NFT' + (nft>1?'s':'') + ' at 666,666 $BIG each' : 'below the 666,666 swap rate') + '</b></div>' +
-        '<div style="margin-top:6px">' + (holder
-          ? 'Holder perks active: RWA access by trait, IRL opportunities, events.'
-          : 'Swap 666,666 $BIG for your first NFT to unlock RWA access.') + '</div>';
-    } else {
-      out.innerHTML = '<span class="warn">Unexpected response from the chain gateway.</span>';
-    }
-  }catch(e){
-    out.innerHTML = '<span class="warn">BIG Network gateway is offline right now (chain node warming up). Your tokens are safe on-chain — try again shortly, or check your address on the BigScan explorer.</span>';
-  }
-  btn.disabled = false; btn.textContent = 'Check Status';
-}
-document.getElementById('holderAddr').addEventListener('keydown', function(e){
-  if(e.key === 'Enter'){ e.preventDefault(); checkHolder(); }
-});
-</script>
+
+<script src="https://unpkg.com/@solana/web3.js@1.95.3/lib/index.iife.min.js"></script>
+<script src="assets/gate.js"></script>
 </body>
 </html>
