@@ -32,7 +32,8 @@ const BIGFOOT_CONFIG = {
     const assets = await fetchAssetsByOwner(umi, publicKey(owner), { skipDerivePlugins: true });
     const held = assets.filter(function (a) {
       const ua = a.updateAuthority;
-      return ua && ua.type !== "None" && String(ua.fields && ua.fields[0]) === BIGFOOT_CONFIG.collection;
+      const addr = ua ? (ua.fields ? ua.fields[0] : ua.address) : null;
+      return String(addr) === BIGFOOT_CONFIG.collection;
     }).map(function (a) {
       return { mint: String(a.publicKey), name: a.name, uri: String(a.uri || "") };
     });
