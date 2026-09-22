@@ -111,6 +111,58 @@ const BIGFOOT_CONFIG = {
     return "https://solflare.com/ul/v1/browse/" + url + "?ref=" + ref;
   }
 
+  /* ---------------- floating connect modal ----------------
+   * Fires no matter where "Connect Wallet" is clicked on the page (nav,
+   * hero, or the in-panel button) so the user always sees something happen,
+   * even when the click target is scrolled out of view. */
+  var MODAL_ID = "bigfootWalletModal";
+  function ensureModalStyles() {
+    if (document.getElementById("bigfootWalletModalStyles")) return;
+    var css = document.createElement("style");
+    css.id = "bigfootWalletModalStyles";
+    css.textContent =
+      "#" + MODAL_ID + "{position:fixed;inset:0;z-index:9999;display:flex;" +
+      "align-items:center;justify-content:center;background:rgba(6,10,6,.72);" +
+      "padding:20px;box-sizing:border-box}" +
+      "#" + MODAL_ID + " .bwm-box{position:relative;max-width:360px;width:100%;" +
+      "background:#0c150c;border:1px solid rgba(126,242,155,.35);border-radius:14px;" +
+      "padding:26px 24px;box-shadow:0 16px 48px rgba(0,0,0,.55);text-align:center;" +
+      "font-family:inherit;color:#eafff0}" +
+      "#" + MODAL_ID + " h4{margin:6px 0 8px;font-size:16px;letter-spacing:.03em}" +
+      "#" + MODAL_ID + " p{margin:0 0 16px;font-size:13px;opacity:.85;line-height:1.4}" +
+      "#" + MODAL_ID + " .bwm-close{position:absolute;top:10px;right:12px;" +
+      "background:none;border:0;color:#9fdcae;font-size:18px;cursor:pointer;line-height:1}" +
+      "#" + MODAL_ID + " .bwm-link{display:block;margin:0 0 10px;padding:11px 18px;" +
+      "border-radius:8px;font-weight:700;font-size:13px;letter-spacing:.04em;" +
+      "text-transform:uppercase;text-decoration:none;background:linear-gradient(90deg,#7ef29b,#4ad46f);" +
+      "color:#08130a}" +
+      "#" + MODAL_ID + " .bwm-link:last-of-type{margin-bottom:0}" +
+      "#" + MODAL_ID + " .bwm-link.bwm-ghost{background:transparent;color:#7ef29b;" +
+      "border:1px solid rgba(126,242,155,.4)}";
+    document.head.appendChild(css);
+  }
+  function closeWalletModal() {
+    var m = document.getElementById(MODAL_ID);
+    if (m) m.remove();
+  }
+  function showWalletModal(title, body, linksHtml) {
+    ensureModalStyles();
+    closeWalletModal();
+    var wrap = document.createElement("div");
+    wrap.id = MODAL_ID;
+    wrap.innerHTML =
+      '<div class="bwm-box">' +
+      '<button class="bwm-close" aria-label="Close" onclick="bigfootGate.closeModal()">&times;</button>' +
+      "<h4>" + title + "</h4>" +
+      "<p>" + body + "</p>" +
+      linksHtml +
+      "</div>";
+    wrap.addEventListener("click", function (e) {
+      if (e.target === wrap) closeWalletModal();
+    });
+    document.body.appendChild(wrap);
+  }
+
   async function connect() {
     var p = getProvider();
     if (!p) {
@@ -119,11 +171,24 @@ const BIGFOOT_CONFIG = {
           reason: "No wallet app browser detected \u2014 tap to open this page inside Phantom.",
           mobile: true,
         });
+        showWalletModal(
+          "Open Your Wallet App",
+          "Mobile browsers can\u2019t pop up a wallet extension. Tap below to reopen this page inside Phantom or Solflare \u2014 wallet connect works instantly there.",
+          '<a class="bwm-link" href="' + phantomBrowseUrl() + '">Open in Phantom</a>' +
+          '<a class="bwm-link bwm-ghost" href="' + solflareBrowseUrl() + '">Open in Solflare</a>'
+        );
         return;
       }
       setGateUI(false, { reason: "No Solana wallet found \u2014 install Phantom." });
+      showWalletModal(
+        "No Wallet Found",
+        "Install the Phantom or Solflare browser extension, then click Connect Wallet again.",
+        '<a class="bwm-link" href="https://phantom.app/download" target="_blank" rel="noopener">Get Phantom</a>' +
+        '<a class="bwm-link bwm-ghost" href="https://solflare.com/download" target="_blank" rel="noopener">Get Solflare</a>'
+      );
       return;
     }
+    closeWalletModal();
     try {
       var res = await p.connect();
       var owner = res.publicKey.toString();
@@ -154,7 +219,7 @@ const BIGFOOT_CONFIG = {
     if (p && p.isConnected) connect();
   }
 
-  window.bigfootGate = { connect: connect, boot: boot, config: BIGFOOT_CONFIG };
+  window.bigfootGate = { connect: connect, boot: boot, config: BIGFOOT_CONFIG, closeModal: closeWalletModal };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
