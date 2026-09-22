@@ -77,11 +77,53 @@ const BIGFOOT_CONFIG = {
       conn.textContent = state ? "Verified \u2713" : "Connect Wallet";
       conn.disabled = state;
     }
+    var out = document.getElementById("holderOut");
+    if (out) {
+      if (!state && info.mobile) {
+        out.innerHTML =
+          '<div class="mobile-wallet-links" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">' +
+          '<a class="wbtn secondary" href="' + phantomBrowseUrl() + '">Open in Phantom</a>' +
+          '<a class="wbtn secondary" href="' + solflareBrowseUrl() + '">Open in Solflare</a>' +
+          '</div>';
+      } else if (!state) {
+        out.innerHTML = "";
+      }
+    }
+  }
+
+  function isMobile() {
+    return /android|iphone|ipad|ipod/i.test(navigator.userAgent || "");
+  }
+
+  /* Mobile browsers (Chrome, Samsung Internet, Safari, etc.) never get an
+   * injected wallet provider like desktop extensions do. The fix is Phantom's
+   * documented "browse" deep link, which reopens this exact page inside
+   * Phantom's in-app browser -- where window.solana IS injected, so the
+   * normal connect() flow below just works unchanged. */
+  function phantomBrowseUrl() {
+    var url = encodeURIComponent(location.href);
+    var ref = encodeURIComponent(location.origin);
+    return "https://phantom.app/ul/browse/" + url + "?ref=" + ref;
+  }
+  function solflareBrowseUrl() {
+    var url = encodeURIComponent(location.href);
+    var ref = encodeURIComponent(location.origin);
+    return "https://solflare.com/ul/v1/browse/" + url + "?ref=" + ref;
   }
 
   async function connect() {
     var p = getProvider();
-    if (!p) { setGateUI(false, { reason: "No Solana wallet found \u2014 install Phantom." }); return; }
+    if (!p) {
+      if (isMobile()) {
+        setGateUI(false, {
+          reason: "No wallet app browser detected \u2014 tap to open this page inside Phantom.",
+          mobile: true,
+        });
+        return;
+      }
+      setGateUI(false, { reason: "No Solana wallet found \u2014 install Phantom." });
+      return;
+    }
     try {
       var res = await p.connect();
       var owner = res.publicKey.toString();
