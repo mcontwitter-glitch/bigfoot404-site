@@ -3,15 +3,14 @@
  * Metaplex Core "Bigfoot" collection on Solana mainnet and unlocks the
  * gated site sections. Non-holders see locked overlays.
  *
- * Verification is exact: Core assets carry the collection address as their
- * update authority, so the match is unspoofable.
+ * This browser-only check is for display, not server-side access control.
+ * Private holder content must be guarded by server-side authorization.
  */
 const BIGFOOT_CONFIG = {
   /* Official Bigfoot collection — Metaplex Core, "Bigfoot", 1,500 minted */
   collection: "CEYQLZWtF9sqMATXJGkM8UqP5JQjEcCaBBmmXtJkL3pF",
   collectionName: "Bigfoot",
   rpc: "https://api.mainnet-beta.solana.com",
-  sessionMinutes: 60,         // how long a verification holds
 };
 
 (function () {
@@ -163,7 +162,46 @@ const BIGFOOT_CONFIG = {
     document.body.appendChild(wrap);
   }
 
+  var activeOwner = null;
+  var verificationVersion = 0;
+  function onWalletDisconnected() {
+    activeOwner = null;
+    verificationVersion++;
+    try { sessionStorage.removeItem(KEY); } catch (e) {}
+    setGateUI(false, { reason: "Wallet not verified" });
+  }
+
+  async function onWalletAccount(owner) {
+    if (!owner || owner === activeOwner) return;
+    activeOwner = owner;
+    var version = ++verificationVersion;
+    closeWalletModal();
+    setGateUI(false, { reason: "Verifying NFTs\u2026" });
+    try {
+      var out = await verifyHolder(owner);
+      if (version !== verificationVersion) return; // account changed during scan
+      var isHolder = out.count > 0;
+      if (isHolder) setGateUI(true, { count: out.count });
+      else {
+        activeOwner = null; // allow another scan if holdings change
+        setGateUI(false, { reason: "No Bigfoot NFT found in this wallet" });
+      }
+    } catch (e) {
+      if (version !== verificationVersion) return;
+      activeOwner = null;
+      setGateUI(false, { reason: "NFT scan failed. Please try again." });
+    }
+  }
+
   async function connect() {
+    // Reown's Solana modal works from normal mobile browsers via WalletConnect.
+    // Unlike injected extensions, it can hand off to installed wallet apps.
+    if (window.bigfootWalletConnect) {
+      try {
+        await window.bigfootWalletConnect.open();
+        return;
+      } catch (e) { /* retain the injected/deep-link fallback below */ }
+    }
     var p = getProvider();
     if (!p) {
       if (isMobile()) {
@@ -173,7 +211,7 @@ const BIGFOOT_CONFIG = {
         });
         showWalletModal(
           "Open Your Wallet App",
-          "Mobile browsers can\u2019t pop up a wallet extension. Tap below to reopen this page inside Phantom or Solflare \u2014 wallet connect works instantly there.",
+          "WalletConnect is still loading, or is unavailable. You can also open this page inside Phantom or Solflare.",
           '<a class="bwm-link" href="' + phantomBrowseUrl() + '">Open in Phantom</a>' +
           '<a class="bwm-link bwm-ghost" href="' + solflareBrowseUrl() + '">Open in Solflare</a>'
         );
@@ -182,7 +220,7 @@ const BIGFOOT_CONFIG = {
       setGateUI(false, { reason: "No Solana wallet found \u2014 install Phantom." });
       showWalletModal(
         "No Wallet Found",
-        "Install the Phantom or Solflare browser extension, then click Connect Wallet again.",
+        "WalletConnect is unavailable. Install the Phantom or Solflare browser extension, then try again.",
         '<a class="bwm-link" href="https://phantom.app/download" target="_blank" rel="noopener">Get Phantom</a>' +
         '<a class="bwm-link bwm-ghost" href="https://solflare.com/download" target="_blank" rel="noopener">Get Solflare</a>'
       );
@@ -191,15 +229,12 @@ const BIGFOOT_CONFIG = {
     closeWalletModal();
     try {
       var res = await p.connect();
-      var owner = res.publicKey.toString();
-      setGateUI(false, { reason: "Verifying NFTs\u2026" });
-      var out = await verifyHolder(owner);
-      var isHolder = out.count > 0;
-      try {
-        sessionStorage.setItem(KEY, JSON.stringify({ owner: owner, count: out.count, ts: Date.now(), ok: isHolder }));
-      } catch (e) {}
-      if (isHolder) setGateUI(true, { count: out.count });
-      else setGateUI(false, { reason: "No Bigfoot NFT found in this wallet" });
+      var owner = (res.publicKey || p.publicKey).toString();
+      await onWalletAccount(owner);
+      if (p.on && !p._bigfootDisconnectBound) {
+        p.on("disconnect", onWalletDisconnected);
+        p._bigfootDisconnectBound = true;
+      }
     } catch (e) {
       var msg = (e && e.message === "User rejected") ? "Connect rejected" : (e && e.message) || "Connect failed";
       setGateUI(false, { reason: msg });
@@ -207,19 +242,18 @@ const BIGFOOT_CONFIG = {
   }
 
   function boot() {
-    try {
-      var s = JSON.parse(sessionStorage.getItem(KEY) || "null");
-      if (s && s.ok && Date.now() - s.ts < BIGFOOT_CONFIG.sessionMinutes * 60000) {
-        setGateUI(true, { count: s.count });
-        return;
-      }
-    } catch (e) {}
-    setGateUI(false, {});
+    // Never unlock based only on mutable sessionStorage: require a live wallet.
+    if (activeOwner) return; // AppKit may reconnect before DOMContentLoaded.
+    onWalletDisconnected();
     var p = getProvider();
-    if (p && p.isConnected) connect();
+    if (p && p.isConnected && p.publicKey) onWalletAccount(p.publicKey.toString());
   }
 
-  window.bigfootGate = { connect: connect, boot: boot, config: BIGFOOT_CONFIG, closeModal: closeWalletModal };
+  window.bigfootGate = {
+    connect: connect, boot: boot, config: BIGFOOT_CONFIG,
+    closeModal: closeWalletModal,
+    onWalletAccount: onWalletAccount, onWalletDisconnected: onWalletDisconnected,
+  };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();

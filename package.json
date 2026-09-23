@@ -1,0 +1,16 @@
+{
+  "name": "bigfoot404-site-wallet-connect",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build:wallet": "node build-walletconnect.mjs"
+  },
+  "dependencies": {
+    "@reown/appkit": "1.8.24",
+    "@reown/appkit-adapter-solana": "1.8.24"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
+  }
+}
