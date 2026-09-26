@@ -45,6 +45,9 @@ const BIGFOOT_CONFIG = {
   function setGateUI(state, info) {
     info = info || {};
     document.documentElement.classList.toggle("big-locked", !state);
+    /* CRM gate hook: pages hosting protected content (crm.html) listen for this
+     * event to load the real content only after verification clears the wallet. */
+    try { document.dispatchEvent(new CustomEvent("bigfoot-gate-change", { detail: { unlocked: !!state, count: info.count || 0, reason: info.reason || "" } })); } catch (e) {}
     document.querySelectorAll(".gated").forEach(function (sec) {
       var ov = sec.querySelector(":scope > .gate-overlay");
       if (state) { if (ov) ov.remove(); sec.classList.remove("is-locked"); return; }
